@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties version="1.0">
+	<comment>English (en_US) Localization File</comment>
+	<!-- Items -->
+	<entry key="item.crystalShard.name">Crystal Shard</entry>
+	<entry key="item.crystalLamina.name">Crystal Lamina</entry>
+	<entry key="item.riftCatalyst.name">Rift Catalyst</entry>
+	<!-- Blocks/Tile Entities -->
+	<entry key="tile.oreCrystal.name">Crystal Geode</entry>
+	<entry key="tile.blockCrystal.name">Crystal Block</entry>
+	<entry key="tile.stoneStrange.name">Aberrack</entry>
+	<!-- Entities -->
+	<entry key="entity.xthuoth.Rift.name">Rift</entry>
+	<entry key="entity.xthuoth.Blighter.name">Blighter</entry>
+</properties>
