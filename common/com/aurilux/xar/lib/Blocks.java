@@ -34,13 +34,13 @@ public class Blocks {
 	
 	public static void init(Configuration config) {
 		//terrain block inits. Necessary because their block Id's must be less than 256 to work correctly
-		wightBulb = (BlockFlower) new BlockWightBulb(nextTerrainID++)
+		wightBulb = (BlockFlower) new BlockWightBulb(config.getTerrainBlock("Terrain Blocks", "Wight Bulb ID", nextTerrainID++, null).getInt())
         	.setCreativeTab(CreativeTabs.tabDecorations)
 			.setHardness(0.0F)
 			.setLightValue(.5f)
 			.setTextureName("wightbulb")
 			.setStepSound(Block.soundGrassFootstep);
-		stoneStrange = new BlockStrangeStone(nextTerrainID++)
+		stoneStrange = new BlockStrangeStone(config.getTerrainBlock("Terrain Blocks", "Strange Stone ID", nextTerrainID++, null).getInt())
 			.setCreativeTab(CreativeTabs.tabBlock)
 			.setHardness(5.0f)
 			.setResistance(10.0f)
@@ -48,28 +48,27 @@ public class Blocks {
 			.setStepSound(Block.soundStoneFootstep);
 		//Make sure your flowing fluid block is above your still fluid block
 		//or else block updates will change neighbors into the previous block ID
-		ichorMoving = (BlockFluid) new BlockIchorFlowing(nextTerrainID++)
+		ichorMoving = (BlockFluid) new BlockIchorFlowing(config.getTerrainBlock("Terrain Blocks", "Flowing Ichor ID", nextTerrainID++, null).getInt())
 			.setHardness(100.0f)
 			.setLightOpacity(1);
-		ichorStill = new BlockIchorStill(nextTerrainID++)
+		ichorStill = new BlockIchorStill(config.getTerrainBlock("Terrain Blocks", "Still Ichor ID", nextTerrainID++, null).getInt())
 			.setHardness(100.0f)
 			.setLightOpacity(1);
 		
 		//other block inits
-		oreCrystal = new BlockCrystalOre(nextOtherID++)
+		oreCrystal = new BlockCrystalOre(config.getBlock("Other Blocks", "Crystal Ore ID", nextOtherID++, null).getInt())
     		.setCreativeTab(CreativeTabs.tabBlock)
 			.setHardness(2.0f)
 			.setResistance(5.0f)
 			.setTextureName("oreCrystal")
 			.setStepSound(Block.soundStoneFootstep);
-		blockCrystal = new BlockCrystalCompact(nextOtherID++)
+		blockCrystal = new BlockCrystalCompact(config.getBlock("Other Blocks", "Crystal Block ID", nextOtherID++, null).getInt())
 			.setCreativeTab(CreativeTabs.tabBlock)
 			.setHardness(5.0f)
 			.setResistance(10.0f)
 			.setTextureName("blockCrystal")
 			.setStepSound(Block.soundStoneFootstep);
-		portal = (BlockPortal) new BlockXthuothPortal(nextOtherID++)
-        	.setCreativeTab(CreativeTabs.tabBlock) //TODO remove this after debugging
+		portal = (BlockPortal) new BlockXthuothPortal(config.getBlock("Other Blocks", "Xth'uoth Portal ID", nextOtherID++, null).getInt())
         	.setHardness(-1.0F)
         	.setLightValue(0.75F)
 			.setTextureName("portalXthuoth")

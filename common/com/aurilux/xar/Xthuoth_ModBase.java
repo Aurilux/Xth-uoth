@@ -3,11 +3,13 @@ package com.aurilux.xar;
 import java.util.logging.Level;
 
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.EnumHelper;
 
 import com.aurilux.xar.handlers.LocalizationHandler;
 import com.aurilux.xar.handlers.XARUpdateHandler;
 import com.aurilux.xar.lib.Blocks;
 import com.aurilux.xar.lib.Entities;
+import com.aurilux.xar.lib.Misc;
 import com.aurilux.xar.lib.Items;
 import com.aurilux.xar.lib.Recipes;
 import com.aurilux.xar.lib.WorldGen;
@@ -32,19 +34,23 @@ public class Xthuoth_ModBase {
 	@Instance(XAR_Ref.MOD_ID)
     public static Xthuoth_ModBase instance;
 
-    @SidedProxy(clientSide = "com.aurilux.xar.proxy.ClientXARProxy", serverSide = "com.aurilux.xar.proxy.CommonXARProxy")
+    @SidedProxy(clientSide = XAR_Ref.CLIENT_PROXY, serverSide = XAR_Ref.SERVER_PROXY)
     public static CommonXARProxy proxy;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
 		//initialize enum additions, localization, and load configuration
+		EnumHelper.addCreatureAttribute("ABERRATION");
 		Configuration config = new Configuration(e.getSuggestedConfigurationFile());
 		try {
 			config.load();
 			
-			//register blocks, items
+			//register enums, blocks, items, and entities
+			Misc.init(config);
 			Blocks.init(config);
 			Items.init(config);
+			Entities.init(config);
+			Recipes.init();
 			
 			//register biomes, dimensions, and other world-gen
 			WorldGen.init();
@@ -63,14 +69,10 @@ public class Xthuoth_ModBase {
 	@EventHandler
 	public void init(FMLInitializationEvent e) {
 		//register event handlers
-		//MinecraftForge.TERRAIN_GEN_BUS.register(new TerrainGenEventHandler());
-		
-		Recipes.init();
-		Entities.init();
+        NetworkRegistry.instance().registerConnectionHandler(new XARUpdateHandler());
 		
 		//register tile entities and other rendering
 		proxy.initRenderers();
-        NetworkRegistry.instance().registerConnectionHandler(new XARUpdateHandler());
 	}
 
 	@EventHandler

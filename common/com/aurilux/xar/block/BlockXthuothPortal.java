@@ -48,8 +48,7 @@ public class BlockXthuothPortal extends BlockPortal {
      */
     @Override
     public boolean tryToCreatePortal(World world, int x, int y, int z) {
-    	//TODO make this check for an enclosed rift
-    	//TODO change this so it checks for an Iris-shaped portal
+    	//TODO let it form a portal so long as a  portal in inside (should already be handled by rift catalyst)
         byte b0 = 0; //facing east/west
         byte b1 = 0; //facing north/south
         

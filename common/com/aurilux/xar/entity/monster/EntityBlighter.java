@@ -3,6 +3,7 @@ package com.aurilux.xar.entity.monster;
 import java.util.List;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -21,6 +22,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 import com.aurilux.xar.entity.ai.EntityAIBlighterSwell;
+import com.aurilux.xar.lib.Misc;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -50,6 +52,10 @@ public class EntityBlighter extends EntityMob {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.25D);
+    }
+    
+    public EnumCreatureAttribute getCreatureAttribute() {
+        return Misc.ABERRATION;
     }
 
     /**

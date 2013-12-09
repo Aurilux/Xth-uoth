@@ -23,7 +23,6 @@ public class RenderRift extends Render {
 	}
 	
 	public void doRenderRift(EntityRift rift, double xPos, double yPos, double zPos, float width, float height) {
-		//TODO modify this
         GL11.glPushMatrix();
         GL11.glTranslatef((float)xPos, (float)yPos + 1, (float)zPos);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
