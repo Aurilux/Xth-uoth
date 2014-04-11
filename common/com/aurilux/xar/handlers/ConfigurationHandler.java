@@ -10,7 +10,6 @@ import cpw.mods.fml.common.FMLLog;
 import net.minecraftforge.common.Configuration;
 
 public class ConfigurationHandler {
-	//TODO complete configuration settings
 	public static Configuration config;
 	
 	public static void init(File configFile) {

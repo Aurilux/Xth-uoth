@@ -96,12 +96,10 @@ public class BlockXAR extends Block {
 	 * if it's not silk touched that is.
 	 */
 	@Override
-    public void dropBlockAsItemWithChance(World world, int xCoord, int yCoord, int zCoord, int metadata, float par6, int fortune)
-    {
+    public void dropBlockAsItemWithChance(World world, int xCoord, int yCoord, int zCoord, int metadata, float par6, int fortune) {
         super.dropBlockAsItemWithChance(world, xCoord, yCoord, zCoord, metadata, par6, fortune);
 
-        if (this.idDropped(metadata, world.rand, fortune) != this.blockID)
-        {
+        if (this.idDropped(metadata, world.rand, fortune) != this.blockID) {
         	int xpAmount = 0;
     		if (this.blockID == Blocks.oreCrystal.blockID) {
     			//range of 0-2 is equivalent to coal

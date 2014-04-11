@@ -2,6 +2,7 @@ package com.aurilux.xar;
 
 import java.util.logging.Level;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
 
@@ -36,11 +37,10 @@ public class Xthuoth_ModBase {
 
     @SidedProxy(clientSide = XAR_Ref.CLIENT_PROXY, serverSide = XAR_Ref.SERVER_PROXY)
     public static CommonXARProxy proxy;
-	
+    
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
-		//initialize enum additions, localization, and load configuration
-		EnumHelper.addCreatureAttribute("ABERRATION");
+		//initialize enum additions and load configuration
 		Configuration config = new Configuration(e.getSuggestedConfigurationFile());
 		try {
 			config.load();

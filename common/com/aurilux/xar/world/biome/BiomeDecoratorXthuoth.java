@@ -2,7 +2,7 @@ package com.aurilux.xar.world.biome;
 
 import static net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.CUSTOM;
 
-import com.aurilux.xar.world.gen.WorldGenWightBulb;
+import com.aurilux.xar.world.gen.feature.WorldGenWightBulb;
 
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.biome.BiomeGenBase;

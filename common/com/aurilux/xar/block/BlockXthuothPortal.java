@@ -66,6 +66,11 @@ public class BlockXthuothPortal extends BlockPortal {
         if (b0 == b1) { //Is it somehow facing both ways? (makes sure intersecting portals won't activate)
         	System.out.println("GOT HERE 3!");
         	System.out.println(b0 + "  " + b1);
+        	System.out.println(portalFrameID + "  " + Blocks.blockCrystal.blockID);
+        	System.out.println("- Z-axis: " + world.getBlockId(x, y, z - 1));
+        	System.out.println("+ Z-axis: " + world.getBlockId(x, y, z + 1));
+        	System.out.println("- X-axis: " + world.getBlockId(x - 1, y, z));
+        	System.out.println("+ X-axis: " + world.getBlockId(x + 1, y, z));
             return false;
         }
         else {

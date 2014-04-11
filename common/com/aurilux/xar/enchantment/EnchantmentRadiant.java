@@ -2,6 +2,7 @@ package com.aurilux.xar.enchantment;
 
 import net.minecraft.enchantment.EnchantmentDamage;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.StatCollector;
 
 import com.aurilux.xar.lib.Misc;
 
@@ -30,4 +31,9 @@ public class EnchantmentRadiant extends EnchantmentDamage {
     public String getName() {
         return "enchantment.damage.aberration";
     }
+    
+    /*@Override
+    public String getTranslatedName(int level) {
+	    return "Radiant " + StatCollector.translateToLocal("enchantment.level." + level);
+    }*/
 }

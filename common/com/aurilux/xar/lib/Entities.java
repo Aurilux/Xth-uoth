@@ -26,23 +26,23 @@ public class Entities {
 		catalystID = config.get("Entities", "Catalyst ID", nextEntityID++, null).getInt();
 		
 		//Mobs
-		addMobEntity(EntityBlighter.class,  "Blighter",      blighterID, 80, 10, false, 0x7043D9, 0);
+		addMobEntity(EntityBlighter.class,  "Blighter",      blighterID, 80,  3,   true, 0x7043D9, 0);
 		
 		//Other Entities
-		addEntity(EntityRift.class,         "Rift",          riftID,     80, 3,  false);
-		addEntity(EntityRiftCatalyst.class, "Rift Catalyst", catalystID, 80, 3,  true);
+		addEntity(EntityRift.class,         "Rift",          riftID,     160, 3,   false);
+		addEntity(EntityRiftCatalyst.class, "Rift Catalyst", catalystID, 64,  10,  true);
 	}
     
     //PRIVATE HELPERS
-    private static void addEntity(Class<? extends Entity> cl, String name, int entityId, int trackingRange, int updateFrequency,
+    private static void addEntity(Class<? extends Entity> cl, String name, int entityId, int viewingDist, int updateFrequency,
     		boolean sendsVelocityUpdates) {
-    	EntityRegistry.registerModEntity(cl, name, entityId, Xthuoth_ModBase.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+    	EntityRegistry.registerModEntity(cl, name, entityId, Xthuoth_ModBase.instance, viewingDist, updateFrequency, sendsVelocityUpdates);
     }
 
     @SuppressWarnings("unchecked")
-    private static void addMobEntity(Class<? extends EntityLiving> cl, String name, int entityId, int trackingRange, int updateFrequency,
+    private static void addMobEntity(Class<? extends EntityLiving> cl, String name, int entityId, int viewingDist, int updateFrequency,
     		boolean sendsVelocityUpdates, int primaryColor, int secondaryColor) {
-    	addEntity(cl, name, trackingRange, entityId, updateFrequency, sendsVelocityUpdates);
+    	addEntity(cl, name, viewingDist, entityId, updateFrequency, sendsVelocityUpdates);
     	//registering the mob egg
     	int id = EntityRegistry.findGlobalUniqueEntityId();
         EntityList.IDtoClassMapping.put(id, cl);

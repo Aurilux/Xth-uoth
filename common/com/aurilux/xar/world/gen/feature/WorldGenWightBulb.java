@@ -1,4 +1,4 @@
-package com.aurilux.xar.world.gen;
+package com.aurilux.xar.world.gen.feature;
 
 import java.util.Random;
 

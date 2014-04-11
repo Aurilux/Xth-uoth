@@ -10,7 +10,11 @@
 	<entry key="tile.oreCrystal.name">Crystal Geode</entry>
 	<entry key="tile.blockCrystal.name">Crystal Block</entry>
 	<entry key="tile.stoneStrange.name">Aberrack</entry>
+	<entry key="tile.wightBulb.name">Wightbulb</entry>
 	<!-- Entities -->
 	<entry key="entity.xthuoth.Rift.name">Rift</entry>
 	<entry key="entity.xthuoth.Blighter.name">Blighter</entry>
+	<!-- Misc -->
+	<entry key="enchantment.damage.aberration">Radiant</entry>
+	<entry key="itemGroup.tabsXAR">Xth'uoth</entry>
 </properties>

@@ -12,13 +12,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockWightBulb extends BlockFlower {
+	//TODO add particles that float up from the 'bulb'
 
     protected BlockWightBulb(int id, Material mat) {
-		// TODO work on this
 		super(id, mat);
         this.setTickRandomly(true);
-        float f = 0.2F;
-        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3.0F, 0.5F + f);
+        this.setBlockBounds(0.1F, 0.0F, 0.1F, 0.9F, .9F, 0.9F);
         this.setUnlocalizedName("wightBulb");
     }
 

@@ -20,11 +20,11 @@ public class Items {
 	public static void init(Configuration config) {
 		//register the items
 		crystalShard = new ItemCrystalShard(config.getItem("Items", "Crystal Shard ID", nextItemID++, null).getInt())
-			.setCreativeTab(CreativeTabs.tabMaterials);
+			.setCreativeTab(Misc.tabsXAR);
 		crystalLamina = new ItemCrystalLamina(config.getItem("Items", "Crystal Lamina ID", nextItemID++, null).getInt())
-			.setCreativeTab(CreativeTabs.tabMaterials);
+			.setCreativeTab(Misc.tabsXAR);
 		riftCatalyst = new ItemRiftCatalyst(config.getItem("Items", "Rift Catalyst ID", nextItemID++, null).getInt())
-			.setCreativeTab(CreativeTabs.tabMisc);
+			.setCreativeTab(Misc.tabsXAR);
 		
 		GameRegistry.registerItem(crystalShard, "Crystal Shard");
 		GameRegistry.registerItem(crystalLamina, "Crystal Lamina");

@@ -35,37 +35,37 @@ public class Blocks {
 	public static void init(Configuration config) {
 		//terrain block inits. Necessary because their block Id's must be less than 256 to work correctly
 		wightBulb = (BlockFlower) new BlockWightBulb(config.getTerrainBlock("Terrain Blocks", "Wight Bulb ID", nextTerrainID++, null).getInt())
-        	.setCreativeTab(CreativeTabs.tabDecorations)
+			.setCreativeTab(Misc.tabsXAR)
 			.setHardness(0.0F)
-			.setLightValue(.5f)
+			.setLightValue(.5F)
 			.setTextureName("wightbulb")
 			.setStepSound(Block.soundGrassFootstep);
 		stoneStrange = new BlockStrangeStone(config.getTerrainBlock("Terrain Blocks", "Strange Stone ID", nextTerrainID++, null).getInt())
-			.setCreativeTab(CreativeTabs.tabBlock)
-			.setHardness(5.0f)
-			.setResistance(10.0f)
+			.setCreativeTab(Misc.tabsXAR)
+			.setHardness(0.4F)
+			.setResistance(20.0F)
 			.setTextureName("strangeStone")
 			.setStepSound(Block.soundStoneFootstep);
-		//Make sure your flowing fluid block is above your still fluid block
+		//Make sure your flowing fluid block is declared right before your still fluid block
 		//or else block updates will change neighbors into the previous block ID
 		ichorMoving = (BlockFluid) new BlockIchorFlowing(config.getTerrainBlock("Terrain Blocks", "Flowing Ichor ID", nextTerrainID++, null).getInt())
-			.setHardness(100.0f)
+			.setHardness(100.0F)
 			.setLightOpacity(1);
 		ichorStill = new BlockIchorStill(config.getTerrainBlock("Terrain Blocks", "Still Ichor ID", nextTerrainID++, null).getInt())
-			.setHardness(100.0f)
+			.setHardness(100.0F)
 			.setLightOpacity(1);
 		
 		//other block inits
 		oreCrystal = new BlockCrystalOre(config.getBlock("Other Blocks", "Crystal Ore ID", nextOtherID++, null).getInt())
-    		.setCreativeTab(CreativeTabs.tabBlock)
-			.setHardness(2.0f)
-			.setResistance(5.0f)
+			.setCreativeTab(Misc.tabsXAR)
+			.setHardness(2.0F)
+			.setResistance(15.0F)
 			.setTextureName("oreCrystal")
 			.setStepSound(Block.soundStoneFootstep);
 		blockCrystal = new BlockCrystalCompact(config.getBlock("Other Blocks", "Crystal Block ID", nextOtherID++, null).getInt())
-			.setCreativeTab(CreativeTabs.tabBlock)
-			.setHardness(5.0f)
-			.setResistance(10.0f)
+			.setCreativeTab(Misc.tabsXAR)
+			.setHardness(5.0F)
+			.setResistance(30.0F)
 			.setTextureName("blockCrystal")
 			.setStepSound(Block.soundStoneFootstep);
 		portal = (BlockPortal) new BlockXthuothPortal(config.getBlock("Other Blocks", "Xth'uoth Portal ID", nextOtherID++, null).getInt())
@@ -84,8 +84,8 @@ public class Blocks {
 		GameRegistry.registerBlock(ichorMoving, "Ichor Flow");
 		
 		//for harvest level: 0 = wood, 1 = stone, 2 = iron, 3 = diamond
-		MinecraftForge.setBlockHarvestLevel(oreCrystal, "pickaxe", 1);
-		MinecraftForge.setBlockHarvestLevel(blockCrystal, "pickaxe", 2);
+		MinecraftForge.setBlockHarvestLevel(oreCrystal, "pickaxe", 3);
+		MinecraftForge.setBlockHarvestLevel(blockCrystal, "pickaxe", 3);
 		MinecraftForge.setBlockHarvestLevel(stoneStrange, "pickaxe", 1);
 	}
 }

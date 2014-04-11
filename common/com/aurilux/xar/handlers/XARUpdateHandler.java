@@ -17,7 +17,7 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.network.IConnectionHandler;
 import cpw.mods.fml.common.network.Player;
 
-public class XARUpdateHandler  implements IConnectionHandler {
+public class XARUpdateHandler implements IConnectionHandler {
     private final String MESSAGE_PREFACE = "[\u00A75" + XAR_Ref.MOD_NAME + "\u00A7r] A new version of " + XAR_Ref.MOD_NAME + " is available.";
     
     private String updateThread = null;

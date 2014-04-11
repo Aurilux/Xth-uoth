@@ -1,7 +1,5 @@
 package com.aurilux.xar.entity.monster;
 
-import java.util.List;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -23,6 +21,7 @@ import net.minecraft.world.World;
 
 import com.aurilux.xar.entity.ai.EntityAIBlighterSwell;
 import com.aurilux.xar.lib.Misc;
+import com.aurilux.xar.world.MutableExplosion;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -35,10 +34,13 @@ public class EntityBlighter extends EntityMob {
     //Maximum time before a blighter will explode
     private int fuseTime = 30;
     // Explosion radius for this blighter
-    private int explosionRadius = 0;
+    private int explosionRadius = 5;
+    //The explosion object
+    private MutableExplosion exp;
     
     public EntityBlighter(World world) {
         super(world);
+        //AI tasks
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(2, new EntityAIBlighterSwell(this));
         this.tasks.addTask(3, new EntityAIAttackOnCollide(this, 1.0D, false));
@@ -47,6 +49,12 @@ public class EntityBlighter extends EntityMob {
         this.tasks.addTask(5, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
         this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
+        
+        //Explosion info
+        exp = new MutableExplosion(world, this)
+        	.setPotionEffect(new PotionEffect(Potion.wither.id, 200))
+        	.setDamage(true, 2)
+        	.setForce(true, .25F);
 	}
 
     protected void applyEntityAttributes() {
@@ -125,15 +133,7 @@ public class EntityBlighter extends EntityMob {
                 timeSinceIgnited = fuseTime;
 
                 if (!this.worldObj.isRemote) {
-                    boolean flag = this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
-                    this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)explosionRadius, flag);
-                    @SuppressWarnings("rawtypes")
-					List playerList = this.worldObj.playerEntities;
-                    for (int i = 0; i < playerList.size(); i++) {
-                    	EntityPlayer player = (EntityPlayer) playerList.get(i);
-                    	if (this.getDistanceToEntity(player) <= 4);
-                    		player.addPotionEffect(new PotionEffect(Potion.wither.id, 300));
-                    }
+                    exp.createExplosion(this.posX, this.posY, this.posZ, (float)explosionRadius);
                     this.setDead();
                 }
             }
