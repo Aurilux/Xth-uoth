@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.NetLoginHandler;
 import net.minecraft.network.packet.NetHandler;
@@ -31,7 +33,8 @@ public class XARUpdateHandler implements IConnectionHandler {
 	
 	private boolean isUpdateAvailable() {
 		try {
-			InputStream versionFile = new URL(XAR_Ref.VERSION_FILE).openStream();
+			HttpsURLConnection conn = (HttpsURLConnection) new URL(XAR_Ref.VERSION_FILE).openConnection();
+			InputStream versionFile = conn.getInputStream();
 			Properties versionProperties = new Properties();
 			versionProperties.loadFromXML(versionFile);
 			String currentVersion = versionProperties.getProperty(Loader.instance().getMCVersionString());
@@ -39,6 +42,7 @@ public class XARUpdateHandler implements IConnectionHandler {
 			return (currentVersion != null && updateThread != null && !currentVersion.equals(XAR_Ref.MOD_VERSION));
 		}
 		catch (Exception e) {
+			System.out.println(e);
 			return false;
 		}
 	}

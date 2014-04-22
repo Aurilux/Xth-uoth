@@ -3,7 +3,7 @@
 	"modid": "@MOD_ID@",
 	"name": "@MOD_NAME@: the Aberrant Realm",
 	"description": "Explore the Aberrant Realm of Xth'uoth, where fear and insanity rule!",
-	"version": "@MOD_VERSION",
+	"version": "@MOD_VERSION@",
 	"url": "",
 	"updateUrl": "",
 	"authorList": [

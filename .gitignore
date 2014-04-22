@@ -2,9 +2,11 @@
 ######################
 *.jar
 *.bat
-private.properties
-error.*
+*.classpath
+*.project
 Media/
+bin/
+.git/
 resources/backup/
 
 # OS generated files #
@@ -16,3 +18,4 @@ resources/backup/
 .Trashes
 ehthumbs.db
 Thumbs.db
+/bin
