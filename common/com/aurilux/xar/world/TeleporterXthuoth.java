@@ -86,7 +86,8 @@ public class TeleporterXthuoth extends Teleporter {
 	}
 
     /** Place an entity in a nearby portal which already exists. */
-    public boolean placeInExistingPortal(Entity entity, double xPos, double yPos, double zPos, float yRot) {
+    @SuppressWarnings("unchecked")
+	public boolean placeInExistingPortal(Entity entity, double xPos, double yPos, double zPos, float yRot) {
         short maxHeight = 128;
         double d3 = -1.0D;
         int portalPosX = 0;
@@ -472,7 +473,8 @@ public class TeleporterXthuoth extends Teleporter {
      * called periodically to remove out-of-date portal locations from the cache list. Argument par1 is a
      * WorldServer.getTotalWorldTime() value.
      */
-    public void removeStalePortalLocations(long par1)
+    @SuppressWarnings("rawtypes")
+	public void removeStalePortalLocations(long par1)
     {
         if (par1 % 100L == 0L)
         {

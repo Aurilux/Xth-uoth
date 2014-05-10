@@ -2,16 +2,16 @@ package com.aurilux.xar;
 
 import java.util.logging.Level;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.EnumHelper;
 
 import com.aurilux.xar.handlers.LocalizationHandler;
 import com.aurilux.xar.handlers.XARUpdateHandler;
+import com.aurilux.xar.lib.Achievements;
 import com.aurilux.xar.lib.Blocks;
 import com.aurilux.xar.lib.Entities;
-import com.aurilux.xar.lib.Misc;
 import com.aurilux.xar.lib.Items;
+import com.aurilux.xar.lib.Misc;
+import com.aurilux.xar.lib.Potions;
 import com.aurilux.xar.lib.Recipes;
 import com.aurilux.xar.lib.WorldGen;
 import com.aurilux.xar.lib.XAR_Ref;
@@ -50,6 +50,8 @@ public class Xthuoth_ModBase {
 			Blocks.init(config);
 			Items.init(config);
 			Entities.init(config);
+			Achievements.init(config);
+			Potions.init();
 			Recipes.init();
 			
 			//register biomes, dimensions, and other world-gen

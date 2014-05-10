@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockFluid;
 import net.minecraft.block.BlockPortal;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -12,8 +11,8 @@ import com.aurilux.xar.block.BlockCrystalCompact;
 import com.aurilux.xar.block.BlockCrystalOre;
 import com.aurilux.xar.block.BlockIchorFlowing;
 import com.aurilux.xar.block.BlockIchorStill;
-import com.aurilux.xar.block.BlockWightBulb;
 import com.aurilux.xar.block.BlockStrangeStone;
+import com.aurilux.xar.block.BlockWightBulb;
 import com.aurilux.xar.block.BlockXthuothPortal;
 
 import cpw.mods.fml.common.registry.GameRegistry;

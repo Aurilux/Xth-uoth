@@ -1,12 +1,10 @@
 package com.aurilux.xar.client.model.entity;
 
-import com.aurilux.xar.lib.XAR_Ref;
-
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.obj.WavefrontObject;
+
+import com.aurilux.xar.lib.XAR_Ref;
 
 public class ModelCrystalGolem extends ModelBase {
 	private WavefrontObject model;

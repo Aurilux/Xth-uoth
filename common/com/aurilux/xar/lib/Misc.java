@@ -2,7 +2,6 @@ package com.aurilux.xar.lib;
 
 import com.aurilux.xar.enchantment.EnchantmentRadiant;
 import com.aurilux.xar.helpers.CreativeTabXAR;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EnumCreatureAttribute;
