@@ -10,14 +10,14 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.aurilux.xar.entity.monster.EntityBlighter;
-import com.aurilux.xar.lib.XAR_Ref;
+import com.aurilux.xar.lib.XARModInfo;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderBlighter extends RenderLiving {
-	private final ResourceLocation BLIGHTER_TEXTURE = new ResourceLocation(XAR_Ref.MOD_ID + ":textures/entity/blighter.png");
+	private final ResourceLocation BLIGHTER_TEXTURE = new ResourceLocation(XARModInfo.MOD_ID + ":textures/entity/blighter.png");
 	
 	public RenderBlighter() {
 		super(new ModelCreeper(), .5f);

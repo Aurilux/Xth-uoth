@@ -6,6 +6,7 @@
 *.project
 Media/
 bin/
+lib/
 .git/
 resources/backup/
 

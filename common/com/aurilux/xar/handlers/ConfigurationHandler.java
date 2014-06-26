@@ -3,11 +3,11 @@ package com.aurilux.xar.handlers;
 import java.io.File;
 import java.util.logging.Level;
 
-import com.aurilux.xar.lib.XAR_Ref;
+import com.aurilux.xar.lib.XARModInfo;
 
 import cpw.mods.fml.common.FMLLog;
 
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 
 public class ConfigurationHandler {
 	public static Configuration config;
@@ -19,7 +19,7 @@ public class ConfigurationHandler {
 			//other stuff
 		}
         catch (Exception e) {
-            FMLLog.log(Level.SEVERE, e, XAR_Ref.MOD_NAME + " has had a problem loading its configuration");
+            //FMLLog.log(Level.SEVERE, e, XARModInfo.MOD_NAME + " has had a problem loading its configuration");
         }
         finally {
             config.save();

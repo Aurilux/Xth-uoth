@@ -1,16 +1,16 @@
 package com.aurilux.xar.item;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.aurilux.xar.entity.item.EntityRiftCatalyst;
-import com.aurilux.xar.helpers.ItemXAR;
 
-public class ItemRiftCatalyst extends ItemXAR {
+public class ItemRiftCatalyst extends Item {
 
 	public ItemRiftCatalyst(int id) {
-		super(id, "riftCatalyst");
+		super();
         this.maxStackSize = 1;
 	}
 	

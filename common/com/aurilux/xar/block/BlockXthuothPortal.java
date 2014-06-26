@@ -2,39 +2,41 @@ package com.aurilux.xar.block;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemMonsterPlacer;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 
-import com.aurilux.xar.lib.Blocks;
-import com.aurilux.xar.lib.WorldGen;
-import com.aurilux.xar.lib.XAR_Ref;
+import com.aurilux.xar.lib.XARBlocks;
+import com.aurilux.xar.lib.XARModInfo;
+import com.aurilux.xar.lib.XARWorldgen;
 import com.aurilux.xar.world.TeleporterXthuoth;
 
 public class BlockXthuothPortal extends BlockPortal {
-	private final int portalFrameID = Blocks.blockCrystal.blockID;
+	//TODO Update to function like the normal portal
+	private final Block portalFrameBlock = XARBlocks.blockCrystal;
 	
-	public BlockXthuothPortal(int id) {
-        super(id);
-        this.setUnlocalizedName("portal");
+	public BlockXthuothPortal() {
+        super();
     }
-
+	
 	@Override
-	public void registerIcons(IconRegister reg) {
-		this.blockIcon = reg.registerIcon(XAR_Ref.MOD_ID + ":" + this.getUnlocalizedName());
+	public void registerBlockIcons(IIconRegister reg) {
+		this.blockIcon = reg.registerIcon(XARModInfo.MOD_ID + ":" + this.getUnlocalizedName());
 	}
 	
 	public void updateTick(World world, int xCoord, int yCoord, int zCoord, Random ran) {
 		//TODO spawn aberrations and spread corruption
 		super.updateTick(world, xCoord, yCoord, zCoord, ran);
-		if (world.provider.isSurfaceWorld() && ran.nextInt(2000) < world.difficultySetting) {
+		if (world.provider.isSurfaceWorld() && world.difficultySetting != EnumDifficulty.PEACEFUL) {
 			int l;
-			for (l = yCoord; !world.doesBlockHaveSolidTopSurface(xCoord, l, zCoord) && l > 0; --l) { ; }
-			if (l > 0 && !world.isBlockNormalCube(xCoord, l + 1, zCoord)) {
+			for (l = yCoord; !world.doesBlockHaveSolidTopSurface(world, xCoord, l, zCoord) && l > 0; --l) { ; }
+			if (l > 0 && !world.isBlockNormalCubeDefault(xCoord, l + 1, zCoord, false)) {
 				Entity entity = ItemMonsterPlacer.spawnCreature(world, 57, (double)xCoord + 0.5D, (double)l + 1.1D, (double)zCoord + 0.5D);
 				if (entity != null) {
 					entity.timeUntilPortal = entity.getPortalCooldown();
@@ -45,7 +47,7 @@ public class BlockXthuothPortal extends BlockPortal {
 
     /**
      * Checks to see if this location is valid to create a portal and will return True if it does.
-     */
+     *//*
     @Override
     public boolean tryToCreatePortal(World world, int x, int y, int z) {
     	//TODO let it form a portal so long as a  portal in inside (should already be handled by rift catalyst)
@@ -66,7 +68,7 @@ public class BlockXthuothPortal extends BlockPortal {
         if (b0 == b1) { //Is it somehow facing both ways? (makes sure intersecting portals won't activate)
         	System.out.println("GOT HERE 3!");
         	System.out.println(b0 + "  " + b1);
-        	System.out.println(portalFrameID + "  " + Blocks.blockCrystal.blockID);
+        	System.out.println(portalFrameID + "  " + XARBlocks.blockCrystal.blockID);
         	System.out.println("- Z-axis: " + world.getBlockId(x, y, z - 1));
         	System.out.println("+ Z-axis: " + world.getBlockId(x, y, z + 1));
         	System.out.println("- X-axis: " + world.getBlockId(x - 1, y, z));
@@ -113,7 +115,7 @@ public class BlockXthuothPortal extends BlockPortal {
         }
     }
     
-    /** Determines if the portal frame has been broken, and if so, removes all of the portal blocks */
+    *//** Determines if the portal frame has been broken, and if so, removes all of the portal blocks *//*
     //TODO should recreate/re-render the rift that was used to create the portal
     @Override
     public void onNeighborBlockChange(World world, int x, int y, int z, int neighborID) {
@@ -161,7 +163,7 @@ public class BlockXthuothPortal extends BlockPortal {
                 world.setBlockToAir(x, y, z);
             }
         }
-    }
+    }*/
 
 	/**
 	 * Teleports the player to the appropriate dimension
@@ -174,8 +176,8 @@ public class BlockXthuothPortal extends BlockPortal {
 				EntityPlayerMP player = (EntityPlayerMP) entity;
 				player.timeUntilPortal = 50;
             	int targetDimension = 0; // 0 = Overworld dimension ID
-                if (player.dimension != WorldGen.DIM_ID) {
-                	targetDimension = WorldGen.DIM_ID;
+                if (player.dimension != XARWorldgen.DIM_ID) {
+                	targetDimension = XARWorldgen.DIM_ID;
                 }
                 Teleporter tele = new TeleporterXthuoth(player.mcServer.worldServerForDimension(targetDimension));
                 player.mcServer.getConfigurationManager().transferPlayerToDimension(player, targetDimension, tele);

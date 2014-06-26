@@ -4,7 +4,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.IChunkProvider;
 
-import com.aurilux.xar.lib.WorldGen;
+import com.aurilux.xar.lib.XARWorldgen;
 import com.aurilux.xar.render.SkyRendererXthuoth;
 
 import cpw.mods.fml.relauncher.Side;
@@ -14,10 +14,10 @@ public class WorldProviderXthuoth extends WorldProvider {
 	
 	@Override
     public void registerWorldChunkManager() {
-        this.worldChunkMgr = new ChunkManagerXthuoth(WorldGen.aberrantBiome, 0.0f, 0.0f);
+        this.worldChunkMgr = new ChunkManagerXthuoth(XARWorldgen.aberrantBiome, 0.0f, 0.0f);
         this.isHellWorld = false;
         this.hasNoSky = true;
-        this.dimensionId = WorldGen.DIM_ID;
+        this.dimensionId = XARWorldgen.DIM_ID;
         this.setSkyRenderer(new SkyRendererXthuoth());
     }
 	

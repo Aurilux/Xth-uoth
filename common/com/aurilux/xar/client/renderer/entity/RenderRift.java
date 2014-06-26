@@ -9,14 +9,14 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import com.aurilux.xar.entity.EntityRift;
-import com.aurilux.xar.lib.XAR_Ref;
+import com.aurilux.xar.lib.XARModInfo;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderRift extends Render {
-	private final ResourceLocation RIFT_TEXTURE = new ResourceLocation(XAR_Ref.MOD_ID + ":textures/entity/rift.png");
+	private final ResourceLocation RIFT_TEXTURE = new ResourceLocation(XARModInfo.MOD_ID + ":textures/entity/rift.png");
 	
 	public void doRender(Entity entity, double xPos, double yPos, double zPos, float width, float height) {
 		this.doRenderRift((EntityRift) entity, xPos, yPos, zPos, width, height);

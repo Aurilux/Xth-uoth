@@ -2,19 +2,20 @@ package com.aurilux.xar;
 
 import java.util.logging.Level;
 
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 
 import com.aurilux.xar.handlers.LocalizationHandler;
 import com.aurilux.xar.handlers.XARUpdateHandler;
-import com.aurilux.xar.lib.Achievements;
-import com.aurilux.xar.lib.Blocks;
-import com.aurilux.xar.lib.Entities;
-import com.aurilux.xar.lib.Items;
-import com.aurilux.xar.lib.Misc;
-import com.aurilux.xar.lib.Potions;
-import com.aurilux.xar.lib.Recipes;
-import com.aurilux.xar.lib.WorldGen;
-import com.aurilux.xar.lib.XAR_Ref;
+import com.aurilux.xar.lib.XARAchievements;
+import com.aurilux.xar.lib.XARBlocks;
+import com.aurilux.xar.lib.XAREntities;
+import com.aurilux.xar.lib.XARFluids;
+import com.aurilux.xar.lib.XARItems;
+import com.aurilux.xar.lib.XARMisc;
+import com.aurilux.xar.lib.XARPotions;
+import com.aurilux.xar.lib.XARRecipes;
+import com.aurilux.xar.lib.XARWorldgen;
+import com.aurilux.xar.lib.XARModInfo;
 import com.aurilux.xar.proxy.CommonXARProxy;
 
 import cpw.mods.fml.common.FMLLog;
@@ -25,17 +26,15 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = XAR_Ref.MOD_ID, name = XAR_Ref.MOD_NAME, version = XAR_Ref.MOD_VERSION)
-@NetworkMod(channels = {XAR_Ref.MOD_ID}, clientSideRequired = true, serverSideRequired = false)
+@Mod(modid = XARModInfo.MOD_ID, name = XARModInfo.MOD_NAME, version = XARModInfo.MOD_VERSION, dependencies = XARModInfo.MOD_DEPEND)
 public class Xthuoth_ModBase {
 	
-	@Instance(XAR_Ref.MOD_ID)
+	@Instance(XARModInfo.MOD_ID)
     public static Xthuoth_ModBase instance;
 
-    @SidedProxy(clientSide = XAR_Ref.CLIENT_PROXY, serverSide = XAR_Ref.SERVER_PROXY)
+    @SidedProxy(clientSide = XARModInfo.CLIENT_PROXY, serverSide = XARModInfo.SERVER_PROXY)
     public static CommonXARProxy proxy;
     
 	@EventHandler
@@ -46,19 +45,19 @@ public class Xthuoth_ModBase {
 			config.load();
 			
 			//register enums, blocks, items, and entities
-			Misc.init(config);
-			Blocks.init(config);
-			Items.init(config);
-			Entities.init(config);
-			Achievements.init(config);
-			Potions.init();
-			Recipes.init();
+			XARMisc.init(config);
+			XARBlocks.init(config);
+			XARFluids.init(config);
+			XARItems.init(config);
+			XAREntities.init(config);
+			XARAchievements.init(config);
+			XARPotions.init();
+			XARRecipes.init();
 			
 			//register biomes, dimensions, and other world-gen
-			WorldGen.init();
+			XARWorldgen.init();
 		}
         catch (Exception ex) {
-            FMLLog.log(Level.SEVERE, ex, XAR_Ref.MOD_NAME + " has had a problem loading its configuration");
         }
         finally {
             config.save();
@@ -71,7 +70,8 @@ public class Xthuoth_ModBase {
 	@EventHandler
 	public void init(FMLInitializationEvent e) {
 		//register event handlers
-        NetworkRegistry.instance().registerConnectionHandler(new XARUpdateHandler());
+		//TODO make packet classes and then complete this
+        //NetworkRegistry.instance().registerConnectionHandler(new XARUpdateHandler());
 		
 		//register tile entities and other rendering
 		proxy.initRenderers();

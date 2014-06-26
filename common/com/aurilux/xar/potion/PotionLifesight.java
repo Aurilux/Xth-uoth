@@ -1,6 +1,6 @@
 package com.aurilux.xar.potion;
 
-import com.aurilux.xar.lib.XAR_Ref;
+import com.aurilux.xar.lib.XARModInfo;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -18,7 +18,7 @@ public class PotionLifesight extends Potion {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getStatusIconIndex() {
-		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(XAR_Ref.MOD_ID + ":textures/gui/potionEffectIcons.png"));
+		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(XARModInfo.MOD_ID + ":textures/gui/potionEffectIcons.png"));
 		return 0;
 	}
 

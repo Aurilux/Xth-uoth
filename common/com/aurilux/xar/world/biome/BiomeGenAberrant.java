@@ -5,6 +5,7 @@ import com.aurilux.xar.entity.monster.EntityBlighter;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.biome.BiomeGenBase;
 
@@ -12,11 +13,9 @@ public class BiomeGenAberrant extends BiomeGenBase {
 
 	//par1 the biome ID
 	public BiomeGenAberrant(int id) {
-		super(id);
+		super(id, true);
 		this.setBiomeName("Aberrant");
-		this.minHeight = 0.1F;
-		this.maxHeight = 0.6F;
-		this.topBlock = (byte)Block.bedrock.blockID;
+		this.topBlock = Blocks.bedrock;
 		//this.fillerBlock = 
 		//this.theBiomeDecorator = this.createBiomeDecorator();
 		setDisableRain();

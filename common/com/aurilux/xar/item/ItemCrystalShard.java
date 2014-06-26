@@ -1,9 +1,9 @@
 package com.aurilux.xar.item;
 
-import com.aurilux.xar.helpers.ItemXAR;
+import net.minecraft.item.Item;
 
-public class ItemCrystalShard extends ItemXAR {
+public class ItemCrystalShard extends Item {
 	public ItemCrystalShard(int id) {
-		super(id, "crystalShard");
+		super();
 	}
 }

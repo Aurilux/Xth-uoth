@@ -5,8 +5,10 @@ import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.NETH
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
@@ -15,22 +17,24 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.MapGenBase;
 import net.minecraft.world.gen.MapGenCavesHell;
+import net.minecraft.world.gen.NoiseGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.Event.Result;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.event.terraingen.ChunkProviderEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
-import com.aurilux.xar.lib.Blocks;
+import com.aurilux.xar.lib.XARBlocks;
 
 public class ChunkProviderXthuoth implements IChunkProvider {
+	//FIXME Need to make sure this works like it should
     /** Helper variable to make the code easier to understand */
-    private final int airBlockID = 0;
+    private final Block airBlockID = Blocks.air;
     /** ID of the block used on the first pass (which generates the overall shape) of terrain generation */
-    private final int fillerBlockID = Blocks.stoneStrange.blockID;
+    private final Block fillerBlockID = XARBlocks.stoneStrange;
     /** ID of the block used to form the seas */
-    private final int fluidBlockID = Blocks.ichorStill.blockID;
+    private final Block fluidBlockID = XARBlocks.ichor;
     /** Random number generator */
     private Random xarRNG;
     // Constant variables used in noise initialization
@@ -56,12 +60,12 @@ public class ChunkProviderXthuoth implements IChunkProvider {
     /** The biomes that are used to generate the chunk */
     //private BiomeGenBase[] biomesForGeneration;
     /** A NoiseGeneratorOctaves used in generating nether terrain */
-    private NoiseGeneratorOctaves netherNoiseGen1; //first dimension?
-    private NoiseGeneratorOctaves netherNoiseGen2; //second dimension?
-    private NoiseGeneratorOctaves netherNoiseGen3; //third dimension?
+    private NoiseGenerator netherNoiseGen1; //first dimension?
+    private NoiseGenerator netherNoiseGen2; //second dimension?
+    private NoiseGenerator netherNoiseGen3; //third dimension?
     
-    public NoiseGeneratorOctaves netherNoiseGen6;
-    public NoiseGeneratorOctaves netherNoiseGen7;
+    public NoiseGenerator netherNoiseGen6;
+    public NoiseGenerator netherNoiseGen7;
 
     /** The world where the chunks are being generated. */
     private World world;
@@ -88,7 +92,7 @@ public class ChunkProviderXthuoth implements IChunkProvider {
         this.netherNoiseGen6 = new NoiseGeneratorOctaves(this.xarRNG, 10);
         this.netherNoiseGen7 = new NoiseGeneratorOctaves(this.xarRNG, 16);
 
-        NoiseGeneratorOctaves[] noiseGens = {netherNoiseGen1, netherNoiseGen2, netherNoiseGen3, netherNoiseGen6, netherNoiseGen7};
+        NoiseGenerator[] noiseGens = {netherNoiseGen1, netherNoiseGen2, netherNoiseGen3, netherNoiseGen6, netherNoiseGen7};
         noiseGens = TerrainGen.getModdedNoiseGenerators(world, this.xarRNG, noiseGens);
         this.netherNoiseGen1 = noiseGens[0];
         this.netherNoiseGen2 = noiseGens[1];
@@ -106,7 +110,7 @@ public class ChunkProviderXthuoth implements IChunkProvider {
         this.xarRNG.setSeed((long)xCoord * 341873128712L + (long)zCoord * 132897987541L);
         //32768 = 2^15 and 16x16x128 (x, z, and y respectively)
         //Although the height limit is 256, world land generation does not go above 128
-        byte[] terrainBlocks = new byte[32768];
+        Block[] terrainBlocks = new Block[32768];
         this.generateAberrantTerrain(xCoord, zCoord, terrainBlocks);
         //TODO uncomment this when I actually have something to replace
         //this.replaceBlocksForBiome(xCoord, zCoord, terrainBlocks);
@@ -124,7 +128,7 @@ public class ChunkProviderXthuoth implements IChunkProvider {
     }
 
     /** Generates the overall shape of the terrain in Xth'uoth including the 'sea' */
-    public void generateAberrantTerrain(int xCoord, int yCoord, byte[] terrainBlocks) {
+    public void generateAberrantTerrain(int xCoord, int yCoord, Block[] terrainBlocks) {
         byte b0 = 4;
         byte seaLevel = 32;
         double solidCutoff = 0.0D;
@@ -164,7 +168,7 @@ public class ChunkProviderXthuoth implements IChunkProvider {
                             double d16 = (d11 - d10) * genXZScale;
 
                             for (int n = 0; n < 4; n++) {
-                                int blockID = airBlockID;
+                                Block blockID = airBlockID;
                                 
                                 //This will generate the lakes of liquid
                                 //as this is a mimic of the nether, it will replace what would have been lava
@@ -178,7 +182,7 @@ public class ChunkProviderXthuoth implements IChunkProvider {
                                     blockID = fillerBlockID;
                                 }
 
-                                terrainBlocks[position] = (byte)blockID;
+                                terrainBlocks[position] = blockID;
                                 position += maxHeight;
                                 d15 += d16;
                             }
@@ -198,7 +202,7 @@ public class ChunkProviderXthuoth implements IChunkProvider {
     }
 
     /** Replaces blocks depending on the biome */
-    public void replaceBlocksForBiome(int xCoord, int zCoord, byte[] terrainBlocks) {
+    public void replaceBlocksForBiome(int xCoord, int zCoord, Block[] terrainBlocks) {
         ChunkProviderEvent.ReplaceBiomeBlocks event = new ChunkProviderEvent.ReplaceBiomeBlocks(this, xCoord, zCoord, terrainBlocks, null);
         MinecraftForge.EVENT_BUS.post(event);
         if (event.getResult() == Result.DENY) return;
@@ -223,11 +227,11 @@ public class ChunkProviderXthuoth implements IChunkProvider {
             noiseArray = new double[length * width * height];
         }
         
-        noiseData1 = netherNoiseGen3.generateNoiseOctaves(noiseData1, xCoord, yCoord, zCoord, length, width, height, xzMajorScale / xSlopeDiv,   yMajorScale / ySlopeDiv,   xzMajorScale / zSlopeDiv);
-        noiseData2 = netherNoiseGen1.generateNoiseOctaves(noiseData2, xCoord, yCoord, zCoord, length, width, height, xzMajorScale * xLowerScale, yMajorScale * yLowerScale, xzMajorScale * zLowerScale);
-        noiseData3 = netherNoiseGen2.generateNoiseOctaves(noiseData3, xCoord, yCoord, zCoord, length, width, height, xzMajorScale * xUpperScale, yMajorScale * yUpperScale, xzMajorScale * zUpperScale);
-        noiseData4 = netherNoiseGen6.generateNoiseOctaves(noiseData4, xCoord, yCoord, zCoord, length, 1,     height, 1.0D,                       0.0D,                      1.0D);
-        noiseData5 = netherNoiseGen7.generateNoiseOctaves(noiseData5, xCoord, yCoord, zCoord, length, 1,     height, 100.0D,                     0.0D,                      100.0D);
+        noiseData1 = ((NoiseGeneratorOctaves) netherNoiseGen3).generateNoiseOctaves(noiseData1, xCoord, yCoord, zCoord, length, width, height, xzMajorScale / xSlopeDiv,   yMajorScale / ySlopeDiv,   xzMajorScale / zSlopeDiv);
+        noiseData2 = ((NoiseGeneratorOctaves) netherNoiseGen1).generateNoiseOctaves(noiseData2, xCoord, yCoord, zCoord, length, width, height, xzMajorScale * xLowerScale, yMajorScale * yLowerScale, xzMajorScale * zLowerScale);
+        noiseData3 = ((NoiseGeneratorOctaves) netherNoiseGen2).generateNoiseOctaves(noiseData3, xCoord, yCoord, zCoord, length, width, height, xzMajorScale * xUpperScale, yMajorScale * yUpperScale, xzMajorScale * zUpperScale);
+        noiseData4 = ((NoiseGeneratorOctaves) netherNoiseGen6).generateNoiseOctaves(noiseData4, xCoord, yCoord, zCoord, length, 1,     height, 1.0D,                       0.0D,                      1.0D);
+        noiseData5 = ((NoiseGeneratorOctaves) netherNoiseGen7).generateNoiseOctaves(noiseData5, xCoord, yCoord, zCoord, length, 1,     height, 100.0D,                     0.0D,                      100.0D);
         int k1 = 0;
         int l1 = 0;
         double[] adouble1 = new double[width];
@@ -393,22 +397,27 @@ public class ChunkProviderXthuoth implements IChunkProvider {
         return biomeGen == null ? null : biomeGen.getSpawnableList(type);
     }
 
-    /** Returns the location of the closest structure of the specified type. If not found returns null. */
-    @Override
-    public ChunkPosition findClosestStructure(World world, String str, int xCoord, int yCoord, int zCoord) {
-        return null;
-    }
-    
-    @Override
-    public int getLoadedChunkCount() {
-        return 0;
-    }
+	@Override
+	public ChunkPosition func_147416_a(World var1, String var2, int var3, int var4, int var5) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
-	public void recreateStructures(int i, int j) {
+	public int getLoadedChunkCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void recreateStructures(int var1, int var2) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void saveExtraData() {
+		// TODO Auto-generated method stub
+		
 	}
 }

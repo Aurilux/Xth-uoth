@@ -12,7 +12,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.packet.Packet60Explosion;
+import net.minecraft.init.Blocks;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
@@ -23,6 +23,7 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public class MutableExplosion extends Explosion {
+	//FIXME Change most of this
 	/** The maximum radius an explosion may have */
 	public final int MAX_RADIUS = 16;
 	
@@ -77,7 +78,7 @@ public class MutableExplosion extends Explosion {
 	}
 	
 	public void createExplosion(double originX, double originY, double originZ, float size) {
-		explosionX = originX;
+		/*explosionX = originX;
 		explosionY = originY;
 		explosionZ = originZ;
 		explosionSize = size;
@@ -94,8 +95,8 @@ public class MutableExplosion extends Explosion {
 		while (locations.hasNext()) {
 			ChunkPosition location = locations.next();
 			int xCoord = location.x, yCoord = location.y, zCoord = location.z;
-			int blockID = world.getBlockId(xCoord, yCoord, zCoord);
-			Block block = Block.blocksList[blockID];
+			Block blockID = world.getBlock(xCoord, yCoord, zCoord);
+			Block block = Blocks.blocksList[blockID];
 			
 			if (destroysBlocks && mobGriefingFlag) {
                 if (blockID > 0) {
@@ -174,7 +175,7 @@ public class MutableExplosion extends Explosion {
 					}
 				}
 			}
-		}
+		}*/
 		
 		notifyClients();
 	}
@@ -192,7 +193,7 @@ public class MutableExplosion extends Explosion {
 		affectedEntities.addAll(world.getEntitiesWithinAABBExcludingEntity(exploder, bounds));
 		
 		//determine the blocks affected by the explosion
-		for (int x = 0; x < MAX_RADIUS; x++) {
+		/*for (int x = 0; x < MAX_RADIUS; x++) {
 			for (int y = 0; y < MAX_RADIUS; y++) {
 				for (int z = 0; z < MAX_RADIUS; z++) {
 					//if we are at the edges of the explosion's area
@@ -232,7 +233,7 @@ public class MutableExplosion extends Explosion {
 					}
 				}
 			}
-		}
+		}*/
 	}
 	
 	protected DamageSource getDamageSource() {
@@ -279,7 +280,7 @@ public class MutableExplosion extends Explosion {
 			while (iterator.hasNext()) {
 				EntityPlayer entityplayer = (EntityPlayer)iterator.next();
 				if (entityplayer.getDistanceSq(explosionX, explosionY, explosionZ) < 4096.0D) {
-					((EntityPlayerMP)entityplayer).playerNetServerHandler.sendPacketToPlayer(new Packet60Explosion(explosionX, explosionY, explosionZ, explosionSize, (destroysBlocks ? affectedBlockLocations : new ArrayList()), (Vec3)this.affectedPlayers.get(entityplayer)));
+					//((EntityPlayerMP)entityplayer).playerNetServerHandler.sendPacketToPlayer(new Packet60Explosion(explosionX, explosionY, explosionZ, explosionSize, (destroysBlocks ? affectedBlockLocations : new ArrayList()), (Vec3)this.affectedPlayers.get(entityplayer)));
 				}
 			}
 		}

@@ -4,13 +4,13 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.obj.WavefrontObject;
 
-import com.aurilux.xar.lib.XAR_Ref;
+import com.aurilux.xar.lib.XARModInfo;
 
 public class ModelCrystalGolem extends ModelBase {
 	private WavefrontObject model;
 	
 	public ModelCrystalGolem() {
-		model = (WavefrontObject) AdvancedModelLoader.loadModel(XAR_Ref.ASSETS_DIR + "crystalGolem.obj");
+		//model = (WavefrontObject) AdvancedModelLoader.loadModel(XARModInfo.ASSETS_DIR + "crystalGolem.obj");
 		//I think this gets all the separate meshes i.e. legs and other individual body parts
 		//model.groupObjects
 	}

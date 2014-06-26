@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 
-import com.aurilux.xar.lib.Blocks;
+import com.aurilux.xar.lib.XARBlocks;
 
 import cpw.mods.fml.common.IWorldGenerator;
 
@@ -40,7 +40,7 @@ public class CrystalGenerator implements IWorldGenerator {
             int randPosY = random.nextInt(64);
             int randPosZ = z + random.nextInt(16);
 
-            new WorldGenMinable(Blocks.oreCrystal.blockID, veinSize).generate(world, random, randPosX, randPosY, randPosZ);
+            new WorldGenMinable(XARBlocks.oreCrystal, veinSize).generate(world, random, randPosX, randPosY, randPosZ);
         }
     }
     

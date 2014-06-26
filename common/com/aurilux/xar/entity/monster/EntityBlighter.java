@@ -20,13 +20,14 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 import com.aurilux.xar.entity.ai.EntityAIBlighterSwell;
-import com.aurilux.xar.lib.Misc;
+import com.aurilux.xar.lib.XARMisc;
 import com.aurilux.xar.world.MutableExplosion;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityBlighter extends EntityMob {
+	//FIXME commented line and drops on death
 	//Time when this creeper was last in an active state
     private int lastActiveTime;
     //The amount of time since the blighter was close enough to the player to ignite
@@ -59,11 +60,11 @@ public class EntityBlighter extends EntityMob {
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.25D);
+        //this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.25D);
     }
     
     public EnumCreatureAttribute getCreatureAttribute() {
-        return Misc.ABERRATION;
+        return XARMisc.ABERRATION;
     }
 
     /**
@@ -162,14 +163,6 @@ public class EntityBlighter extends EntityMob {
      */
     public float getBlighterFlashIntensity(float partialTick) {
         return ((float)lastActiveTime + (float)(timeSinceIgnited - lastActiveTime) * partialTick) / (float)(fuseTime - 2);
-    }
-
-    /**
-     * Returns the item ID for the item the mob drops on death.
-     */
-    protected int getDropItemId() {
-    	//TODO change this
-        return Item.gunpowder.itemID;
     }
 
     /**

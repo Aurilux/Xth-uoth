@@ -3,7 +3,7 @@ package com.aurilux.xar.enchantment;
 import net.minecraft.enchantment.EnchantmentDamage;
 import net.minecraft.entity.EntityLivingBase;
 
-import com.aurilux.xar.lib.Misc;
+import com.aurilux.xar.lib.XARMisc;
 
 public class EnchantmentRadiant extends EnchantmentDamage {
 
@@ -23,7 +23,7 @@ public class EnchantmentRadiant extends EnchantmentDamage {
 
     @Override
     public float calcModifierLiving(int level, EntityLivingBase entity) {
-        return entity.getCreatureAttribute() == Misc.ABERRATION ? (float)level * 2.5F : 0.0F;
+        return entity.getCreatureAttribute() == XARMisc.ABERRATION ? (float)level * 2.5F : 0.0F;
     }
 
     @Override

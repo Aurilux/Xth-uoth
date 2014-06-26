@@ -1,11 +1,10 @@
 package com.aurilux.xar.block;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
-import com.aurilux.xar.helpers.BlockXAR;
-
-public class BlockCrystalCompact extends BlockXAR {
+public class BlockCrystalCompact extends Block {
 	public BlockCrystalCompact(int id) {
-		super(id, Material.iron, "blockCrystal");
+		super(Material.iron);
 	}
 }

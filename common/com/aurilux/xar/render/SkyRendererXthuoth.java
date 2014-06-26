@@ -9,13 +9,13 @@ import net.minecraftforge.client.IRenderHandler;
 
 import org.lwjgl.opengl.GL11;
 
-import com.aurilux.xar.lib.XAR_Ref;
+import com.aurilux.xar.lib.XARModInfo;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class SkyRendererXthuoth extends IRenderHandler {
-	private final ResourceLocation SKY_TEXTURE = new ResourceLocation(XAR_Ref.MOD_ID + ":textures/environment/xthuoth_space.png");
+	private final ResourceLocation SKY_TEXTURE = new ResourceLocation(XARModInfo.MOD_ID + ":textures/environment/xthuoth_space.png");
 	
 	@Override
 	@SideOnly(Side.CLIENT)

@@ -5,27 +5,28 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.LongHashMap;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.ChunkCoordIntPair;
-import net.minecraft.world.PortalPosition;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldServer;
 
-import com.aurilux.xar.lib.Blocks;
-import com.aurilux.xar.lib.WorldGen;
+import com.aurilux.xar.lib.XARBlocks;
+import com.aurilux.xar.lib.XARWorldgen;
 
 public class TeleporterXthuoth extends Teleporter {
+	//FIXME Need to ensure this works as well
 	/** World server instance */
 	private final WorldServer worldServerInstance;
 	/** Random number generator */
 	private final Random rand;
 	/** The block ID of the portal block */
-	private final int portalBlockID = Blocks.portal.blockID;
+	private final Block portalBlockID = XARBlocks.portal;
 	/** The block ID of the block that makes up the portal's frame */
-	private final int portalFrameID = Blocks.blockCrystal.blockID;
+	private final Block portalFrameID = XARBlocks.blockCrystal;
 	/** Stores successful portal placement locations for rapid lookup. */
 	private final LongHashMap destinationCoordinateCache = new LongHashMap();
 	/** A list of valid keys for the destinationCoordainteCache. These are based on the X & Z of the players initial location.*/
@@ -45,7 +46,7 @@ public class TeleporterXthuoth extends Teleporter {
 		//should never get called from the nether as there are no rifts to make a portal on
 		int dimID = this.worldServerInstance.provider.dimensionId;
 		//is the target dimension either the Overworld or Xth'uoth?
-		if (dimID == 0 || dimID == WorldGen.DIM_ID) {
+		if (dimID == 0 || dimID == XARWorldgen.DIM_ID) {
 			//try placing the entity in an existing portal. If an appropriate portal doesn't already exist, make one and then try again
 			if (!placeInExistingPortal(entity, xPos, yPos, zPos, yRot)) {
 				makePortal(entity);
@@ -118,8 +119,8 @@ public class TeleporterXthuoth extends Teleporter {
                     double zPosMod = (double)z + 0.5D - entity.posZ;
 
                     for (int y = worldServerInstance.getActualHeight() - 1; y >= 0; y--) {
-                        if (worldServerInstance.getBlockId(x, y, z) == portalBlockID) {
-                            while (worldServerInstance.getBlockId(x, y - 1, z) == portalBlockID) {
+                        if (worldServerInstance.getBlock(x, y, z) == portalBlockID) {
+                            while (worldServerInstance.getBlock(x, y - 1, z) == portalBlockID) {
                                 y--;
                             }
 
@@ -140,7 +141,7 @@ public class TeleporterXthuoth extends Teleporter {
 
         if (d3 >= 0.0D) {
             if (flag) {
-                destinationCoordinateCache.add(chunkCoord, new PortalPosition(this, portalPosX, portalPosY, portalPosZ, worldServerInstance.getTotalWorldTime()));
+                destinationCoordinateCache.add(chunkCoord, new PortalPosition(portalPosX, portalPosY, portalPosZ, worldServerInstance.getTotalWorldTime()));
                 destinationCoordinateKeys.add(Long.valueOf(chunkCoord));
             }
 
@@ -149,19 +150,19 @@ public class TeleporterXthuoth extends Teleporter {
             yPosMod = (double)portalPosZ + 0.5D;
             int j2 = -1;
 
-            if (worldServerInstance.getBlockId(portalPosX - 1, portalPosY, portalPosZ) == portalBlockID) {
+            if (worldServerInstance.getBlock(portalPosX - 1, portalPosY, portalPosZ) == portalBlockID) {
                 j2 = 2;
             }
 
-            if (worldServerInstance.getBlockId(portalPosX + 1, portalPosY, portalPosZ) == portalBlockID) {
+            if (worldServerInstance.getBlock(portalPosX + 1, portalPosY, portalPosZ) == portalBlockID) {
                 j2 = 0;
             }
 
-            if (worldServerInstance.getBlockId(portalPosX, portalPosY, portalPosZ - 1) == portalBlockID) {
+            if (worldServerInstance.getBlock(portalPosX, portalPosY, portalPosZ - 1) == portalBlockID) {
                 j2 = 3;
             }
 
-            if (worldServerInstance.getBlockId(portalPosX, portalPosY, portalPosZ + 1) == portalBlockID) {
+            if (worldServerInstance.getBlock(portalPosX, portalPosY, portalPosZ + 1) == portalBlockID) {
                 j2 = 1;
             }
 
@@ -313,7 +314,7 @@ public class TeleporterXthuoth extends Teleporter {
                                         j4 = k2 + l3;
                                         int l4 = j2 + (i4 - 1) * k3 - j3 * l2;
 
-                                        if (l3 < 0 && !this.worldServerInstance.getBlockMaterial(k4, j4, l4).isSolid() || l3 >= 0 && !this.worldServerInstance.isAirBlock(k4, j4, l4))
+                                        if (l3 < 0 && !this.worldServerInstance.getBlock(k4, j4, l4).isOpaqueCube() || l3 >= 0 && !this.worldServerInstance.isAirBlock(k4, j4, l4))
                                         {
                                             continue label274;
                                         }
@@ -371,7 +372,7 @@ public class TeleporterXthuoth extends Teleporter {
                                         k4 = k2 + i4;
                                         j4 = j2 + (j3 - 1) * k3;
 
-                                        if (i4 < 0 && !this.worldServerInstance.getBlockMaterial(l3, k4, j4).isSolid() || i4 >= 0 && !this.worldServerInstance.isAirBlock(l3, k4, j4))
+                                        if (i4 < 0 && !this.worldServerInstance.getBlock(l3, k4, j4).isOpaqueCube() || i4 >= 0 && !this.worldServerInstance.isAirBlock(l3, k4, j4))
                                         {
                                             continue label222;
                                         }
@@ -434,7 +435,7 @@ public class TeleporterXthuoth extends Teleporter {
                         j3 = j5 + l2;
                         i4 = j2 + (i3 - 1) * l5 - k2 * k5;
                         flag = l2 < 0;
-                        this.worldServerInstance.setBlock(k3, j3, i4, flag ? portalFrameID : 0);
+                        this.worldServerInstance.setBlock(k3, j3, i4, (Block) (flag ? portalFrameID : 0));
                     }
                 }
             }
@@ -461,7 +462,7 @@ public class TeleporterXthuoth extends Teleporter {
                     k3 = i5 + (i3 - 1) * k5;
                     j3 = j5 + l2;
                     i4 = j2 + (i3 - 1) * l5;
-                    this.worldServerInstance.notifyBlocksOfNeighborChange(k3, j3, i4, this.worldServerInstance.getBlockId(k3, j3, i4));
+                    this.worldServerInstance.notifyBlocksOfNeighborChange(k3, j3, i4, this.worldServerInstance.getBlock(k3, j3, i4));
                 }
             }
         }

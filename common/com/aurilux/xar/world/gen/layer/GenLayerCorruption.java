@@ -1,6 +1,6 @@
 package com.aurilux.xar.world.gen.layer;
 
-import com.aurilux.xar.lib.WorldGen;
+import com.aurilux.xar.lib.XARWorldgen;
 
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.layer.GenLayer;
@@ -32,7 +32,7 @@ public class GenLayerCorruption extends GenLayer {
 
                     if (k1 != BiomeGenBase.river.biomeID && k1 != BiomeGenBase.ocean.biomeID)
                     {
-                        l1 = WorldGen.ABERRANT_ID;
+                        l1 = XARWorldgen.ABERRANT_ID;
                     }
 
                     if (l1 == k1)

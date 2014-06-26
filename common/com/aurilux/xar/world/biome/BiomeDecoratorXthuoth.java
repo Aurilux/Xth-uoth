@@ -12,6 +12,7 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
 public class BiomeDecoratorXthuoth extends BiomeDecorator {
+	//FIXME ensure this works correctly. Decorate function no longer available from superclass?
 	//WorldGens
 	private WorldGenerator wightBulbGen;
 	
@@ -19,13 +20,12 @@ public class BiomeDecoratorXthuoth extends BiomeDecorator {
 	private int wightBulbPerChunk = 50;
 	
 	public BiomeDecoratorXthuoth(BiomeGenBase biomeGenBase) {
-		super(biomeGenBase);
+		super();
 		
 		//WorldGen inits
 		wightBulbGen = new WorldGenWightBulb();
 	}
 	
-	@Override
 	protected void decorate() {
 		MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Pre(currentWorld, randomGenerator, chunk_X, chunk_Z));
 		//TODO add some way to generate rifts
