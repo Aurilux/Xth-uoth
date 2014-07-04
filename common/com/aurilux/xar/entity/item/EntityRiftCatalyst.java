@@ -5,6 +5,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -12,10 +13,12 @@ import net.minecraft.world.World;
 import com.aurilux.xar.entity.EntityRift;
 import com.aurilux.xar.lib.XARBlocks;
 import com.aurilux.xar.lib.XARItems;
+import net.minecraftforge.event.entity.player.EntityInteractEvent;
+import thaumcraft.api.nodes.INode;
+import thaumcraft.api.nodes.NodeType;
+import thaumcraft.common.config.ConfigBlocks;
 
 public class EntityRiftCatalyst extends EntityThrowable {
-	//FIXME commented lines and ensure it works appropriately
-
 	public EntityRiftCatalyst(World world) {
 		super(world);
 	}
@@ -31,18 +34,18 @@ public class EntityRiftCatalyst extends EntityThrowable {
 	@Override
 	protected void onImpact(MovingObjectPosition object) {
 		if (!this.worldObj.isRemote) {
-			// if it hits a rift, spawn the portal. If it hits anything else drop it on the ground (will have to be another entity)
 			Entity entityHit = object.entityHit;
+            TileEntity te = worldObj.getTileEntity(object.blockX, object.blockY, object.blockZ);
 			if (entityHit != null) {
-				//checks if the entity is invulnerable (attackEntityFrom returns false if it is) and if it is a rift
-				if (!entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0)
-						&& entityHit instanceof EntityRift) {
-					//should also destroy the rift when the portal is created
-					entityHit.setDead();
-					//XARBlocks.portal.tryToCreatePortal(this.worldObj,(int)entityHit.posX, (int)entityHit.posY, (int)entityHit.posZ);
-					//this.worldObj.setBlock((int)object.hitVec.xCoord, (int)object.hitVec.yCoord, (int)object.hitVec.zCoord, Block.bedrock.blockID);
-				}
+                entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
 	        }
+            else if (te != null && te instanceof INode) {
+                if (((INode) te).getNodeType() == NodeType.TAINTED) {
+                    worldObj.setBlockToAir(object.blockX, object.blockY, object.blockZ);
+                    EntityRift newRift = new EntityRift(this.worldObj, te.xCoord, te.yCoord, te.zCoord);
+                    this.worldObj.spawnEntityInWorld(newRift);
+                }
+            }
 			else {
 				ItemStack stack = new ItemStack(XARItems.riftCatalyst, 1, 0);
 				EntityItem item = new EntityItem(this.worldObj, object.hitVec.xCoord, object.hitVec.yCoord, object.hitVec.zCoord, stack);

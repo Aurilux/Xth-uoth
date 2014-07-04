@@ -18,13 +18,12 @@ public class CreativeTabXAR extends CreativeTabs {
 
 	@Override
 	public ItemStack getIconItemStack() {
-		return new ItemStack(XARBlocks.stoneStrange, 1);
+		return new ItemStack(XARBlocks.aberrack, 1);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

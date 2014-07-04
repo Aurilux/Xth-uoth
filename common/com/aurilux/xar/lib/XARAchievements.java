@@ -9,7 +9,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 
 public class XARAchievements {
-	//FIXME commented line
 	private static int nextAchID = 30;
 	private static AchievementPage page;
 	private static Achievement[] achievements;
@@ -31,10 +30,10 @@ public class XARAchievements {
 			achievementKey = "achievement_" + i;
 			achievementID = config.get("Achievements", achievementKey, nextAchID++).getInt();
 			parent = info.parent > -1 ? achievements[info.parent] : null;
-			/*achievement = new Achievement(achievementKey, achievementKey, info.xPos, info.yPos, info.icon, parent).registerAchievement();
+			achievement = new Achievement(achievementKey, achievementKey, info.xPos, info.yPos, info.icon, parent).registerStat();
 			if (info.isSpecial)
 				achievement = achievement.setSpecial();
-			achievements[i] = achievement;*/
+			achievements[i] = achievement;
 		}
 		
 		page = new AchievementPage("Xth'uoth", achievements);

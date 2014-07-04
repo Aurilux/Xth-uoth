@@ -10,16 +10,21 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityRift extends Entity {
-
+    //TODO Why can't I right-click on this with my handler?
+    //TODO make this teleport the player to Xthuoth when he collides
 	public EntityRift(World world) {
 		super(world);
 		this.preventEntitySpawning = true;
 	}
-	
-	public EntityRift(World world, double x, double y, double z) {
+
+    public EntityRift(World world, double x, double y, double z) {
 		this(world);
         this.setPosition(x + .5, y, z + .5);
 	}
+
+    @Override
+    protected void entityInit() {
+    }
 	
 	@Override
     public void onCollideWithPlayer(EntityPlayer player) {
@@ -40,29 +45,12 @@ public class EntityRift extends Entity {
         d1 *= 64.0D;
         return distance < d1 * d1;
     }
-	
-	@Override
-	public boolean canBeCollidedWith() {
-		return true;
-	}
-	
-	@Override
-	public void applyEntityCollision(Entity entity) {}
-    
+
     @Override
-    public boolean isEntityInvulnerable() {
-        return true;
+    protected void readEntityFromNBT(NBTTagCompound var1) {
     }
 
-	@Override
-	protected void entityInit() {
-	}
-
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
-	}
-
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
-	}
+    @Override
+    protected void writeEntityToNBT(NBTTagCompound var1) {
+    }
 }

@@ -2,7 +2,10 @@ package com.aurilux.xar.lib;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.HashMap;
 
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionHelper;
 import net.minecraftforge.common.MinecraftForge;
@@ -12,7 +15,6 @@ import com.aurilux.xar.potion.PotionLifesight;
 import com.aurilux.xar.potion.PotionPoisonImmunity;
 
 public class XARPotions {
-	//FIXME commented lines and review new potion classes. potionRequirements no longer exist?
 	private static final int NUM_NEW_POTIONS = 2;
 	private static int potionOffset;
 	
@@ -27,6 +29,9 @@ public class XARPotions {
 		expandPotions();
 		lifesight = new PotionLifesight(potionOffset + nextPotionID++, false, 16767262).setPotionName("potion.lifesight");
 		poisonImmunity = new PotionPoisonImmunity(potionOffset + nextPotionID++, false, 1280).setPotionName("potion.poisonImmunity");
+
+        expandRecipes();
+
 		//PotionHelper.potionRequirements.put(lifesight.getId(), "0 & !1 & 2 & 3");
 		//PotionHelper.potionRequirements.put(poisonImmunity.getId(), "0 & 1 & !2 & 3 & 0+6");
 		
@@ -49,7 +54,6 @@ public class XARPotions {
 	 * &(x) check if bit at position 'x' is set (is 1)
 	 * !(x) check if bit at position 'x' is unset (is 0)
 	 */
-
 	private static void expandPotions() {
 		potionOffset = Potion.potionTypes.length;
 		
@@ -58,15 +62,9 @@ public class XARPotions {
 		Potion[] potionTypes = new Potion[potionOffset + NUM_NEW_POTIONS];
 		System.arraycopy(Potion.potionTypes, 0, potionTypes, 0, potionOffset);
 
-		//Find the Potion.potionTypes array and remove its 'final' modifier so we can change it to our new array we created above
-		Field field = null;
-		Field[] fields = Potion.class.getDeclaredFields();
-		for (Field f : fields) {
-			if (f.getName().equals("potionTypes") || f.getName().equals("field_76425_a")) {
-				field = f;
-				break;
-			}
-		}
+        //Find the Potion.potionTypes array and remove its 'final' modifier so we can change it to our new array we created above
+        Field field = ReflectionHelper.findField(Potion.class,
+                ObfuscationReflectionHelper.remapFieldNames(Potion.class.getName(), "potionTypes", "field_76425_a"));
 		try {
 			field.setAccessible(true);
 
@@ -81,4 +79,19 @@ public class XARPotions {
 		}
 	}
 
+    private static void expandRecipes() {
+        Field field = ReflectionHelper.findField(PotionHelper.class,
+                ObfuscationReflectionHelper.remapFieldNames(PotionHelper.class.getName(), "potionRequirements"));
+
+        try {
+            field.setAccessible(true);
+            HashMap myPotionRequirements = (HashMap) field.get(null);
+
+            myPotionRequirements.put(lifesight.getId(), "0 & !1 & 2 & 3");
+            myPotionRequirements.put(poisonImmunity.getId(), "0 & 1 & !2 & 3 & 0+6");
+        }
+        catch (Exception e) {
+            System.err.println(e);
+        }
+    }
 }

@@ -2,6 +2,9 @@ package com.aurilux.xar.block;
 
 import java.util.Random;
 
+import com.aurilux.xar.lib.XARUtils;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -23,11 +26,13 @@ public class BlockXthuothPortal extends BlockPortal {
 	
 	public BlockXthuothPortal() {
         super();
+        XARBlocks.setBlock(this, "tile.portal", "Xth'uoth Portal");
     }
 	
 	@Override
+    @SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister reg) {
-		this.blockIcon = reg.registerIcon(XARModInfo.MOD_ID + ":" + this.getUnlocalizedName());
+		this.blockIcon = reg.registerIcon(XARUtils.getTexturePath("tile.portal"));
 	}
 	
 	public void updateTick(World world, int xCoord, int yCoord, int zCoord, Random ran) {

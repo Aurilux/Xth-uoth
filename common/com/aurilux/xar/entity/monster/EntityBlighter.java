@@ -12,6 +12,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -25,9 +26,11 @@ import com.aurilux.xar.world.MutableExplosion;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import thaumcraft.api.entities.ITaintedMob;
+import thaumcraft.api.potions.PotionFluxTaint;
+import thaumcraft.common.config.ConfigItems;
 
-public class EntityBlighter extends EntityMob {
-	//FIXME commented line and drops on death
+public class EntityBlighter extends EntityMob implements ITaintedMob {
 	//Time when this creeper was last in an active state
     private int lastActiveTime;
     //The amount of time since the blighter was close enough to the player to ignite
@@ -53,14 +56,14 @@ public class EntityBlighter extends EntityMob {
         
         //Explosion info
         exp = new MutableExplosion(world, this)
-        	.setPotionEffect(new PotionEffect(Potion.wither.id, 200))
+        	.setPotionEffect(new PotionEffect(PotionFluxTaint.instance.id, 200))
         	.setDamage(true, 2)
         	.setForce(true, .25F);
 	}
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        //this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.25D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25D);
     }
     
     public EnumCreatureAttribute getCreatureAttribute() {
@@ -124,7 +127,7 @@ public class EntityBlighter extends EntityMob {
             lastActiveTime = timeSinceIgnited;
             int state = getBlighterState();
             
-            if (state > 0 && timeSinceIgnited == 0) this.playSound("random.fuse", 1.0F, 0.5F);
+            if (state > 0 && timeSinceIgnited == 0) this.playSound("creeper.primed", 1.0F, 0.5F);
 
             timeSinceIgnited += state;
 
@@ -157,10 +160,15 @@ public class EntityBlighter extends EntityMob {
 
     public boolean attackEntityAsMob(Entity entity) { return true; }
 
-    @SideOnly(Side.CLIENT)
+    protected Item getDropItem()
+    {
+        return ConfigItems.itemEssence;
+    }
+
     /**
      * Returns the intensity of the creeper's flash when it is ignited.
      */
+    @SideOnly(Side.CLIENT)
     public float getBlighterFlashIntensity(float partialTick) {
         return ((float)lastActiveTime + (float)(timeSinceIgnited - lastActiveTime) * partialTick) / (float)(fuseTime - 2);
     }

@@ -32,7 +32,7 @@ public class ChunkProviderXthuoth implements IChunkProvider {
     /** Helper variable to make the code easier to understand */
     private final Block airBlockID = Blocks.air;
     /** ID of the block used on the first pass (which generates the overall shape) of terrain generation */
-    private final Block fillerBlockID = XARBlocks.stoneStrange;
+    private final Block fillerBlockID = XARBlocks.aberrack;
     /** ID of the block used to form the seas */
     private final Block fluidBlockID = XARBlocks.ichor;
     /** Random number generator */

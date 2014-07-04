@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentProtection;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,6 +14,7 @@ import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.network.play.server.S27PacketExplosion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
@@ -23,16 +25,8 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public class MutableExplosion extends Explosion {
-	//FIXME Change most of this
 	/** The maximum radius an explosion may have */
 	public final int MAX_RADIUS = 16;
-	
-	//** The x-coord of the origin of the explosion */
-	//private int originX = 0;
-	//** The y-coord of the origin of the explosion */
-	//private int originY = 0;
-	//** The z-coord of the origin of the explosion */
-	//private int originZ = 0;
 	
 	/** Whether or not the explosion deals damage to entities */
 	private boolean inflictsDamage = true;
@@ -78,7 +72,7 @@ public class MutableExplosion extends Explosion {
 	}
 	
 	public void createExplosion(double originX, double originY, double originZ, float size) {
-		/*explosionX = originX;
+		explosionX = originX;
 		explosionY = originY;
 		explosionZ = originZ;
 		explosionSize = size;
@@ -94,12 +88,11 @@ public class MutableExplosion extends Explosion {
 		Iterator<ChunkPosition> locations = affectedBlockLocations.iterator();
 		while (locations.hasNext()) {
 			ChunkPosition location = locations.next();
-			int xCoord = location.x, yCoord = location.y, zCoord = location.z;
-			Block blockID = world.getBlock(xCoord, yCoord, zCoord);
-			Block block = Blocks.blocksList[blockID];
+			int xCoord = location.chunkPosX, yCoord = location.chunkPosY, zCoord = location.chunkPosZ;
+			Block block = world.getBlock(xCoord, yCoord, zCoord);
 			
 			if (destroysBlocks && mobGriefingFlag) {
-                if (blockID > 0) {
+                if (block.getMaterial() != Material.air) {
                     if (block.canDropFromExplosion(this)) {
                         block.dropBlockAsItemWithChance(world, xCoord, yCoord, zCoord, world.getBlockMetadata(xCoord, yCoord, zCoord), 1.0F / explosionSize, 0);
                     }
@@ -107,10 +100,10 @@ public class MutableExplosion extends Explosion {
                 }
 			}
 			if (isFlaming) {
-                int blockBelowID = world.getBlockId(xCoord, yCoord - 1, zCoord);
+                Block blockBelow = world.getBlock(xCoord, yCoord - 1, zCoord);
 
-                if (blockID == 0 && Block.opaqueCubeLookup[blockBelowID] && world.rand.nextInt(3) == 0) {
-                    world.setBlock(xCoord, yCoord, zCoord, Block.fire.blockID);
+                if (Block.getIdFromBlock(blockBelow) == 0 && block.isOpaqueCube() && world.rand.nextInt(3) == 0) {
+                    world.setBlock(xCoord, yCoord, zCoord, Blocks.fire);
                 }
 			}
 			if (isSmoking && spawnExtraParticles) {
@@ -175,7 +168,7 @@ public class MutableExplosion extends Explosion {
 					}
 				}
 			}
-		}*/
+		}
 		
 		notifyClients();
 	}
@@ -189,11 +182,11 @@ public class MutableExplosion extends Explosion {
 		int maxY = MathHelper.floor_double(explosionY + (double) explosionSize + 1.0D);
 		int minZ = MathHelper.floor_double(explosionZ - (double) explosionSize - 1.0D);
 		int maxZ = MathHelper.floor_double(explosionZ + (double) explosionSize + 1.0D);
-		AxisAlignedBB bounds = AxisAlignedBB.getAABBPool().getAABB((double) minX, (double) minY, (double) minZ, (double) maxX, (double) maxY, (double) maxZ);
+		AxisAlignedBB bounds = AxisAlignedBB.getBoundingBox((double) minX, (double) minY, (double) minZ, (double) maxX, (double) maxY, (double) maxZ);
 		affectedEntities.addAll(world.getEntitiesWithinAABBExcludingEntity(exploder, bounds));
 		
 		//determine the blocks affected by the explosion
-		/*for (int x = 0; x < MAX_RADIUS; x++) {
+		for (int x = 0; x < MAX_RADIUS; x++) {
 			for (int y = 0; y < MAX_RADIUS; y++) {
 				for (int z = 0; z < MAX_RADIUS; z++) {
 					//if we are at the edges of the explosion's area
@@ -214,15 +207,14 @@ public class MutableExplosion extends Explosion {
 							int l = MathHelper.floor_double(d0);
 							int i1 = MathHelper.floor_double(d1);
 							int j1 = MathHelper.floor_double(d2);
-							int blockID = world.getBlockId(l, i1, j1);
+							Block block = world.getBlock(l, i1, j1);
 
-                            if (blockID > 0) {
-                                Block block = Block.blocksList[blockID];
-                                float f3 = this.exploder != null ? this.exploder.getBlockExplosionResistance(this, this.world, l, i1, j1, block) : block.getExplosionResistance(this.exploder, world, l, i1, j1, explosionX, explosionY, explosionZ);
+                            if (block.getMaterial() != Material.air) {
+                                float f3 = this.exploder != null ? this.exploder.func_145772_a(this, this.world, l, i1, j1, block) : block.getExplosionResistance(this.exploder, world, l, i1, j1, explosionX, explosionY, explosionZ);
                                 f1 -= (f3 + 0.3F) * f2;
                             }
 
-							if (f1 > 0.0F && (this.exploder == null || this.exploder.shouldExplodeBlock(this, this.world, l, i1, j1, blockID, f1))) {
+							if (f1 > 0.0F && (this.exploder == null || this.exploder.func_145774_a(this, this.world, l, i1, j1, block, f1))) {
 								affectedBlockLocations.add(new ChunkPosition(l, i1, j1));
 							}
 
@@ -233,7 +225,7 @@ public class MutableExplosion extends Explosion {
 					}
 				}
 			}
-		}*/
+		}
 	}
 	
 	protected DamageSource getDamageSource() {
@@ -280,7 +272,8 @@ public class MutableExplosion extends Explosion {
 			while (iterator.hasNext()) {
 				EntityPlayer entityplayer = (EntityPlayer)iterator.next();
 				if (entityplayer.getDistanceSq(explosionX, explosionY, explosionZ) < 4096.0D) {
-					//((EntityPlayerMP)entityplayer).playerNetServerHandler.sendPacketToPlayer(new Packet60Explosion(explosionX, explosionY, explosionZ, explosionSize, (destroysBlocks ? affectedBlockLocations : new ArrayList()), (Vec3)this.affectedPlayers.get(entityplayer)));
+					((EntityPlayerMP)entityplayer).playerNetServerHandler.sendPacket(new S27PacketExplosion(explosionX,
+                            explosionY, explosionZ, explosionSize, (destroysBlocks ? affectedBlockLocations : new ArrayList()), (Vec3)this.affectedPlayers.get(entityplayer)));
 				}
 			}
 		}

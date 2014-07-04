@@ -1,20 +1,23 @@
 package com.aurilux.xar.lib;
 
+import com.aurilux.xar.Xthuoth;
 import net.minecraft.entity.Entity;
 //import net.minecraft.entity.EntityEggInfo;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraftforge.common.config.Configuration;
 
-import com.aurilux.xar.Xthuoth_ModBase;
 import com.aurilux.xar.entity.EntityRift;
 import com.aurilux.xar.entity.item.EntityRiftCatalyst;
 import com.aurilux.xar.entity.monster.EntityBlighter;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
 
 public class XAREntities {
-	//FIXME commented line and maybe better way to register entities?
+	//FIXME maybe better way to register entities?
 	private static int nextEntityID = 100;
 	
     public static int blighterID;
@@ -30,14 +33,14 @@ public class XAREntities {
 		addMobEntity(EntityBlighter.class,  "Blighter",      blighterID, 80,  3,   true, 0x7043D9, 0);
 		
 		//Other Entities
-		addEntity(EntityRift.class,         "Rift",          riftID,     160, 3,   false);
+		addEntity(EntityRift.class, "Rift", riftID, 160, 3, false);
 		addEntity(EntityRiftCatalyst.class, "Rift Catalyst", catalystID, 64,  10,  true);
 	}
     
     //PRIVATE HELPERS
     private static void addEntity(Class<? extends Entity> cl, String name, int entityId, int viewingDist, int updateFrequency,
     		boolean sendsVelocityUpdates) {
-    	EntityRegistry.registerModEntity(cl, name, entityId, Xthuoth_ModBase.instance, viewingDist, updateFrequency, sendsVelocityUpdates);
+    	EntityRegistry.registerModEntity(cl, name, entityId, Xthuoth.instance, viewingDist, updateFrequency, sendsVelocityUpdates);
     }
 
     @SuppressWarnings("unchecked")

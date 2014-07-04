@@ -6,9 +6,9 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.util.EnumHelper;
 
 public class XARMisc {
-	//FIXME commented lines
 	private static final int DEFAULT_RADIANT_ENCH_ID = 15;
     
 	public static CreativeTabs tabsXAR;
@@ -19,7 +19,7 @@ public class XARMisc {
 		tabsXAR = new CreativeTabXAR(CreativeTabs.getNextID(), "tabsXAR");
 		
 		//enums
-		//ABERRATION = EnumHelper.addCreatureAttribute("ABERRATION");
+		ABERRATION = EnumHelper.addCreatureAttribute("ABERRATION");
 		
 		//enchantments
 		radiant = new EnchantmentRadiant(config.get("Misc", "Radiant Ench ID", DEFAULT_RADIANT_ENCH_ID, null).getInt(), 5, 3);
