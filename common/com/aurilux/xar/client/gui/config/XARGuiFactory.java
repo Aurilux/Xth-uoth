@@ -1,6 +1,5 @@
 package com.aurilux.xar.client.gui.config;
 
-/* TODO uncomment when we upgrade to 1.7.10 (after Thaumcraft does)
 import cpw.mods.fml.client.IModGuiFactory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -28,4 +27,3 @@ public class XARGuiFactory implements IModGuiFactory {
         return null;
     }
 }
-*/

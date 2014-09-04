@@ -7,8 +7,6 @@ public class XARModInfo {
 	public static final String MOD_VERSION  = "0.1.4";
     public static final String MOD_DEPEND   = "required-after:Thaumcraft";
 	
-	public static final String ASSETS_DIR   = "assets/" + MOD_ID + "/";
-	
 	public static final String VERSION_FILE = "https://raw.githubusercontent.com/Aurilux/Xth-uoth/master/version.xml";
 	
 	public static final String CLIENT_PROXY = "com.aurilux.xar.proxy.ClientXARProxy";

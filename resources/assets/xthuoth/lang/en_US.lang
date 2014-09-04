@@ -17,8 +17,9 @@ item.wightbulbPod.name=Wightbulb Pod
 # Blocks/Tile Entities
 tile.oreCrystal.name=Crystal Geode
 tile.blockCrystal.name=Crystal Block
-tile.stoneStrange.name=Aberrack
-tile.wightBulb.name=Wightbulb
+tile.blockAberrack.name=Aberrack
+tile.wightbulb.name=Wightbulb
+tile.fluidIchor.name=Ichor
 
 # Entities
 entity.xthuoth.Rift.name=Rift

@@ -1,15 +1,12 @@
 package com.aurilux.xar.lib;
 
-import com.aurilux.xar.handlers.AchievementListener;
-
+import com.aurilux.xar.handler.AchievementListener;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.AchievementPage;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 
 public class XARAchievements {
-	private static int nextAchID = 30;
 	private static AchievementPage page;
 	private static Achievement[] achievements;
 	private static AchievementInfo[] achievementInfo = {
@@ -18,21 +15,20 @@ public class XARAchievements {
 		new AchievementInfo(3, -2, new ItemStack(XARItems.wightbulbPod), false, 1)
 	};
 	
-	public static void init(Configuration config) {
+	public static void init() {
 		achievements = new Achievement[achievementInfo.length];
 		Achievement achievement;
 		Achievement parent;
-		int achievementID;
 		String achievementKey;
 		AchievementInfo info;
 		for (int i = 0; i < achievementInfo.length; i++) {
 			info = achievementInfo[i];
 			achievementKey = "achievement_" + i;
-			achievementID = config.get("Achievements", achievementKey, nextAchID++).getInt();
 			parent = info.parent > -1 ? achievements[info.parent] : null;
 			achievement = new Achievement(achievementKey, achievementKey, info.xPos, info.yPos, info.icon, parent).registerStat();
-			if (info.isSpecial)
-				achievement = achievement.setSpecial();
+			if (info.isSpecial) {
+                achievement = achievement.setSpecial();
+            }
 			achievements[i] = achievement;
 		}
 		

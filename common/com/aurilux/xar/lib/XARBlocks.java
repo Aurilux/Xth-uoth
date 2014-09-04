@@ -3,12 +3,8 @@ package com.aurilux.xar.lib;
 import com.aurilux.xar.block.*;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockFlower;
-import net.minecraft.block.BlockPortal;
-import net.minecraft.item.Item;
-import net.minecraftforge.common.config.Configuration;
 
+//@GameRegistry.ObjectHolder(XARModInfo.MOD_ID)
 public class XARBlocks {
 	public static Block oreCrystal;
 	public static Block blockCrystal;

@@ -1,15 +1,15 @@
 package com.aurilux.xar.block;
 
+import com.aurilux.xar.lib.XARBlocks;
 import com.aurilux.xar.lib.XARUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.world.World;
 
-import com.aurilux.xar.lib.XARBlocks;
+import java.util.Random;
 
 public class BlockWightBulb extends BlockBush {
 	//TODO add particles that float up from the 'bulb'
@@ -31,5 +31,11 @@ public class BlockWightBulb extends BlockBush {
 	@Override
 	public boolean canBlockStay(World world, int x, int y, int z) {
 		return world.getBlock(x, y - 1, z) == XARBlocks.aberrack;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
+
     }
 }

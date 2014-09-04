@@ -1,17 +1,11 @@
 package com.aurilux.xar;
 
-//import com.aurilux.xar.handlers.ConfigurationHandler; TODO uncomment when we upgrade to 1.7.10 (after Thaumcraft does)
-import com.aurilux.xar.handlers.PlayerHandler;
-import com.aurilux.xar.handlers.UpdateHandler;
+import com.aurilux.xar.handler.ConfigurationHandler;
+import com.aurilux.xar.handler.PlayerHandler;
+import com.aurilux.xar.handler.UpdateHandler;
 import com.aurilux.xar.lib.*;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
-
 import com.aurilux.xar.proxy.CommonXARProxy;
-
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -19,15 +13,13 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
+import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = XARModInfo.MOD_ID,
-        name = XARModInfo.MOD_NAME,
-        version = XARModInfo.MOD_VERSION,
-        //guiFactory = XARModInfo.GUI_FACTORY,  TODO uncomment when we upgrade to 1.7.10 (after Thaumcraft does)
-        dependencies = XARModInfo.MOD_DEPEND)
+    name = XARModInfo.MOD_NAME,
+    version = XARModInfo.MOD_VERSION,
+    guiFactory = XARModInfo.GUI_FACTORY,
+    dependencies = XARModInfo.MOD_DEPEND)
 public class Xthuoth {
 	@Instance(XARModInfo.MOD_ID)
     public static Xthuoth instance;
@@ -39,23 +31,16 @@ public class Xthuoth {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
 		//initialize enum additions and load configuration
-		Configuration config = new Configuration(e.getSuggestedConfigurationFile());
-        //ConfigurationHandler.init(e.getSuggestedConfigurationFile());
-        //FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
-        try {
-            XARMisc.init(config);
-            XAREntities.init(config);
-            XARAchievements.init(config);
-        }
-        finally {
-            config.save();
-        }
+        ConfigurationHandler.init(e.getSuggestedConfigurationFile());
+        FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
 
-        //register enums, blocks, items, and entities
+        XARMisc.init();
+        XAREntities.init();
         XARFluids.init();
         XARBlocks.init();
         XARItems.init();
         XARPotions.init();
+        XARAchievements.init();
 	}
 
 	@EventHandler
@@ -72,6 +57,7 @@ public class Xthuoth {
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e) {
+        XARAspects.init();
         XARRecipes.init();
         XARResearch.init();
 	}

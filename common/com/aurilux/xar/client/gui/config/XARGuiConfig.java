@@ -1,7 +1,6 @@
 package com.aurilux.xar.client.gui.config;
 
-/* TODO uncomment when we upgrade to 1.7.10 (after Thaumcraft does)
-import com.aurilux.xar.handlers.ConfigurationHandler;
+import com.aurilux.xar.handler.ConfigurationHandler;
 import com.aurilux.xar.lib.XARModInfo;
 import cpw.mods.fml.client.config.GuiConfig;
 import net.minecraft.client.gui.GuiScreen;
@@ -21,4 +20,3 @@ public class XARGuiConfig extends GuiConfig {
         );
     }
 }
-*/

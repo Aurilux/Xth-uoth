@@ -1,10 +1,5 @@
 package com.aurilux.xar.world;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentProtection;
@@ -23,6 +18,11 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class MutableExplosion extends Explosion {
 	/** The maximum radius an explosion may have */
@@ -129,7 +129,7 @@ public class MutableExplosion extends Explosion {
 		
 		//iterate through the two arrays applying all effects
 		Iterator<Entity> entities = affectedEntities.iterator();
-		Vec3 vec3 = world.getWorldVec3Pool().getVecFromPool(explosionX, explosionY, explosionZ);
+		Vec3 vec3 = Vec3.createVectorHelper(explosionX, explosionY, explosionZ);
 		while (entities.hasNext()) {
 			Entity entity = entities.next();
 			double d7 = (scalesWithDistance ? entity.getDistance(explosionX, explosionY, explosionZ) / (double) diameter : 0.0D);
@@ -164,7 +164,7 @@ public class MutableExplosion extends Explosion {
 						((EntityLivingBase) entity).addPotionEffect(potionEffect);
 					}
 					if (entity instanceof EntityPlayer) {
-						affectedPlayers.put((EntityPlayer) entity, world.getWorldVec3Pool().getVecFromPool(d0 * d10, d1 * d10, d2 * d10));
+						affectedPlayers.put((EntityPlayer) entity, Vec3.createVectorHelper(d0 * d10, d1 * d10, d2 * d10));
 					}
 				}
 			}

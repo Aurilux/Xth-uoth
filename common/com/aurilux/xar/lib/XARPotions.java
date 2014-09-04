@@ -1,18 +1,17 @@
 package com.aurilux.xar.lib;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.HashMap;
-
+import com.aurilux.xar.handler.PotionEffectHandler;
+import com.aurilux.xar.potion.PotionLifesight;
+import com.aurilux.xar.potion.PotionPoisonImmunity;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionHelper;
 import net.minecraftforge.common.MinecraftForge;
 
-import com.aurilux.xar.handlers.PotionEffectHandler;
-import com.aurilux.xar.potion.PotionLifesight;
-import com.aurilux.xar.potion.PotionPoisonImmunity;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.HashMap;
 
 public class XARPotions {
 	private static final int NUM_NEW_POTIONS = 2;
@@ -81,7 +80,7 @@ public class XARPotions {
 
     private static void expandRecipes() {
         Field field = ReflectionHelper.findField(PotionHelper.class,
-                ObfuscationReflectionHelper.remapFieldNames(PotionHelper.class.getName(), "potionRequirements"));
+                ObfuscationReflectionHelper.remapFieldNames(PotionHelper.class.getName(), "potionRequirements", "field_77927_l"));
 
         try {
             field.setAccessible(true);

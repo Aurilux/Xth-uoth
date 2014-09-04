@@ -4,6 +4,7 @@
     <comment>Version lookup for Xth'uoth</comment>
     <entry key="Minecraft 1.6.4">0.1.6</entry>
     <entry key="Minecraft 1.7.2">0.1.8</entry>
+    <entry key="Minecraft 1.7.10">1.0.0</entry>
 
     <entry key="thread">http://goo.gl/J1USql</entry>
 </properties>

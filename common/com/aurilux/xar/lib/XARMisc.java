@@ -5,7 +5,6 @@ import com.aurilux.xar.helpers.CreativeTabXAR;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class XARMisc {
@@ -15,13 +14,13 @@ public class XARMisc {
 	public static EnumCreatureAttribute ABERRATION;
 	public static Enchantment radiant;
 	
-	public static void init(Configuration config) {
+	public static void init() {
 		tabsXAR = new CreativeTabXAR(CreativeTabs.getNextID(), "tabsXAR");
 		
 		//enums
 		ABERRATION = EnumHelper.addCreatureAttribute("ABERRATION");
 		
 		//enchantments
-		radiant = new EnchantmentRadiant(config.get("Misc", "Radiant Ench ID", DEFAULT_RADIANT_ENCH_ID, null).getInt(), 5, 3);
+		radiant = new EnchantmentRadiant(DEFAULT_RADIANT_ENCH_ID, 5, 3);
 	}
 }

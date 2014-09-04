@@ -1,9 +1,8 @@
 package com.aurilux.xar.enchantment;
 
-import net.minecraft.enchantment.EnchantmentDamage;
-import net.minecraft.entity.EntityLivingBase;
-
 import com.aurilux.xar.lib.XARMisc;
+import net.minecraft.enchantment.EnchantmentDamage;
+import net.minecraft.entity.EnumCreatureAttribute;
 
 public class EnchantmentRadiant extends EnchantmentDamage {
 
@@ -22,8 +21,8 @@ public class EnchantmentRadiant extends EnchantmentDamage {
     }
 
     @Override
-    public float calcModifierLiving(int level, EntityLivingBase entity) {
-        return entity.getCreatureAttribute() == XARMisc.ABERRATION ? (float)level * 2.5F : 0.0F;
+    public float func_152376_a(int level, EnumCreatureAttribute attr) {
+        return attr == XARMisc.ABERRATION ? (float)level * 2.5F : 0.0F;
     }
 
     @Override
