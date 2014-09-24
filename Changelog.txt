@@ -1,0 +1,41 @@
+Version 1.1.0-1.7.10
+~Better terrain gen
+~Added aspects to blocks, items, and everything else
+~Crops harvested on land hydrated by ichor will have a small chance to increase their drops
+~Crystal equipment
+    Armor provides increased vis discount?
+    Tools and weapons?
+~Rifts now spread taint just like tainted nodes
+~You shouldn't stay in Xth'uoth for extended periods of time...
+
+Version 1.0.1-1.7.10
+Removed artifacts from using Ant builds
+Added config options for biome ID's and entity ID's plus a few others
+Added Ichor bucket
+You can now correctly harvest and plant Wightbulb
+Crystal ore now generates in the world (had it disabled by accident)
+
+Version 1.0.0-1.7.10
+Updated the code for 1.7.10
+Changed ichor fluids to extend BlockFluidClassic
+Refactored a LOT of code to be generally more efficient and prepared to work with Thaumcraft
+Changed this mod to be a Thaumcraft 4 addon
+Added a Thaumonomicon research tab for Xth'uoth in addition to a few early researches
+Rift Catalyst is now an arcane table recipe
+Portals are now created by throwing a Rift Catalyst at a tainted node
+Added aspects to mob entities (currently only the Blighter)
+Improved configuration and added mod configuration gui
+
+Version 0.1.6-1.6.4
+Added Achievements. 3 individual plus the achievement page
+Added Potions. 1 completely working (poison immunity), 1 work in progress (lifesight)
+Added Wight Bulb Pods. Dropped by breaking Wight Bulbs and used to make the poison immunity potion
+
+Version 0.1.2-1.6.4
+Blighters now have their own custom explosion which only destroys weak blocks like leaves, snow, etc.
+Updated Crystal Block texture
+Mod update detection has been implemented
+Added the Radiant Enchantment which acts like Smite against the natives of Xth'uoth (currently just Blighters)
+
+Version 0.1.0-1.6.4
+Initial alpha release

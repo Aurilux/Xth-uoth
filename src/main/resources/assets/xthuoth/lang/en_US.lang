@@ -1,0 +1,51 @@
+# Achievements
+achievement.achievement_0=OOOH Shiny!
+achievement.achievement_0.desc=And also sharp
+
+achievement.achievement_1=Into the Unknown
+achievement.achievement_1.desc=Better be prepared
+
+achievement.achievement_2=Aberration Slayer
+achievement.achievement_2.desc=Just a little one
+
+# Items
+item.crystalShard.name=Crystal Shard
+item.crystalLamina.name=Crystal Lamina
+item.riftCatalyst.name=Rift Catalyst
+item.wightbulbPod.name=Wightbulb Pod
+item.bucketIchor.name=Ichor Bucket
+
+# Blocks/Tile Entities
+tile.oreCrystal.name=Crystal Geode
+tile.blockCrystal.name=Crystal Block
+tile.blockAberrack.name=Aberrack
+tile.wightbulb.name=Wightbulb
+tile.fluidIchor.name=Ichor
+
+# Entities
+entity.Rift.name=Rift
+entity.Blighter.name=Blighter
+
+# Potions
+potion.poisonImmunity.postfix=Potion of Poison Immunity
+potion.poisonImmunity=Poison Immunity
+potion.lifesight.postfix=Potion of Lifesight
+potion.lifesight=Lifesight
+
+# Misc
+enchantment.damage.aberration=Radiant
+itemGroup.tabsXAR=Xth'uoth
+
+# Research
+tc.research_category.aberrmancy=Aberrmancy
+xarresearch.name.rifts=Rifts
+xarresearch.lore.rifts=Link to another world?
+xarresearch.page.rifts.0=Throughout your study of aura nodes, one type in particular stands out. Tainted nodes appear to resonate at a different frequency than any of the others similar to portals to the nether. You wonder what's on the other side...<BR><BR>You think you've discovered a way to widen this link into a traversable portal, also known as a Rift. Simply throw the Rift Catalyst at a tainted node and a rift will be formed, consuming the catalyst in the process.
+
+xarresearch.name.crystals=Crystals
+xarresearch.lore.crystals=OOH, shiny!
+xarresearch.page.crystals.0=After coming upon these, you can't believe you didn't see them before, and now they are glaringly obvious! Crystal geodes appear similar to infused ores, however they are not aligned with any of the Primal Aspects. Perhaps they are the progenitors to infused crystals? You aren't sure. For now you can turn them into thin plates and blocks that you are certain you will find uses for later.
+
+xarresearch.name.aberrations=Aberrations
+xarresearch.lore.aberrations=Dark, deadly denizens
+xarresearch.page.aberrations.0=The horrors that infest Xth'uoth are categorized as aberrations. The more time you spend in this horrible dimension the more you learn. Here are the few you've discovered so far:
