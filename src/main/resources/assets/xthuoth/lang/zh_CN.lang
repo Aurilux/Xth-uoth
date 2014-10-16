@@ -13,6 +13,7 @@ item.crystalShard.name=水晶碎片
 item.crystalLamina.name=水晶薄片
 item.riftCatalyst.name=裂痕水晶
 item.wightbulbPod.name=灯泡草豆荚
+item.bucketIchor.name=桶装浆液
 
 # Blocks/Tile Entities
 tile.oreCrystal.name=水晶矿石
