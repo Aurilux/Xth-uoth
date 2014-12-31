@@ -1,6 +1,6 @@
 package com.aurilux.xar.world;
 
-import com.aurilux.xar.lib.XARBlocks;
+import com.aurilux.xar.init.XARBlocks;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
@@ -27,7 +27,6 @@ import java.util.Random;
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.NETHER_CAVE;
 
 public class ChunkProviderXthuoth implements IChunkProvider {
-	//FIXME Need to make sure this works like it should
     /** Helper variable to make the code easier to understand */
     private final Block airBlockID = Blocks.air;
     /** ID of the block used on the first pass (which generates the overall shape) of terrain generation */
@@ -109,7 +108,7 @@ public class ChunkProviderXthuoth implements IChunkProvider {
         this.xarRNG.setSeed((long)xCoord * 341873128712L + (long)zCoord * 132897987541L);
         //32768 = 2^15 and 16x16x128 (x, z, and y respectively)
         //Although the height limit is 256, world land generation does not go above 128
-        Block[] terrainBlocks = new Block[32768];
+        Block[] terrainBlocks = new Block[32768]; //32768 = 16*16*128; 65536 = 16*16*256
         this.generateAberrantTerrain(xCoord, zCoord, terrainBlocks);
         //TODO uncomment this when I actually have something to replace
         //this.replaceBlocksForBiome(xCoord, zCoord, terrainBlocks);
@@ -202,9 +201,8 @@ public class ChunkProviderXthuoth implements IChunkProvider {
 
     /** Replaces blocks depending on the biome */
     public void replaceBlocksForBiome(int xCoord, int zCoord, Block[] terrainBlocks) {
-        ChunkProviderEvent.ReplaceBiomeBlocks event = new ChunkProviderEvent.ReplaceBiomeBlocks(this, xCoord, zCoord, terrainBlocks, null);
-        MinecraftForge.EVENT_BUS.post(event);
-        if (event.getResult() == Result.DENY) return;
+        //MinecraftForge.EVENT_BUS.post(event);
+        //if (event.getResult() == Result.DENY) return;
     }
 
     /** loads or generates the chunk at the chunk location specified */
@@ -398,25 +396,23 @@ public class ChunkProviderXthuoth implements IChunkProvider {
 
 	@Override
 	public ChunkPosition func_147416_a(World var1, String var2, int var3, int var4, int var5) {
-		// TODO Auto-generated method stub
+		// NO-OP
 		return null;
 	}
 
 	@Override
 	public int getLoadedChunkCount() {
-		// TODO Auto-generated method stub
+		// NO-OP
 		return 0;
 	}
 
 	@Override
 	public void recreateStructures(int var1, int var2) {
-		// TODO Auto-generated method stub
-		
+		// NO-OP
 	}
 
 	@Override
 	public void saveExtraData() {
-		// TODO Auto-generated method stub
-		
+		// NO-OP
 	}
 }

@@ -1,7 +1,7 @@
 package com.aurilux.xar.client.renderer.entity;
 
 import com.aurilux.xar.entity.monster.EntityBlighter;
-import com.aurilux.xar.lib.XARModInfo;
+import com.aurilux.xar.util.ResourceUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelCreeper;
@@ -14,15 +14,13 @@ import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class RenderBlighter extends RenderLiving {
-	private final ResourceLocation BLIGHTER_TEXTURE = new ResourceLocation(XARModInfo.MOD_ID + ":textures/entity/blighter.png");
+	private final ResourceLocation BLIGHTER_TEXTURE = ResourceUtils.getResource("textures/entity/blighter.png");
 	
 	public RenderBlighter() {
 		super(new ModelCreeper(), .5f);
 	}
 
-    /**
-     * Updates creeper scale in prerender callback
-     */
+    /** Updates creeper scale in prerender callback */
     protected void updateBlighterScale(EntityBlighter blighter, float partialTick) {
         float flashIntensity = blighter.getBlighterFlashIntensity(partialTick);
         float f2 = 1.0F + MathHelper.sin(flashIntensity * 100.0F) * flashIntensity * 0.01F;
@@ -37,9 +35,7 @@ public class RenderBlighter extends RenderLiving {
         GL11.glScalef(f3, f4, f3);
     }
 
-    /**
-     * Updates color multiplier based on creeper state called by getColorMultiplier
-     */
+    /** Updates color multiplier based on creeper state called by getColorMultiplier */
     protected int updateBlighterColorMultiplier(EntityBlighter blighter, float par2, float partialTick) {
         float f2 = blighter.getBlighterFlashIntensity(partialTick);
 
@@ -71,9 +67,7 @@ public class RenderBlighter extends RenderLiving {
         updateBlighterScale((EntityBlighter)entity, partialTick);
     }
 
-    /**
-     * Returns an ARGB int color back. Args: entityLiving, lightBrightness, partialTickTime
-     */
+    /** Returns an ARGB int color back. Args: entityLiving, lightBrightness, partialTickTime */
     protected int getColorMultiplier(EntityLivingBase entity, float brightness, float partialTick) {
         return updateBlighterColorMultiplier((EntityBlighter)entity, brightness, partialTick);
     }

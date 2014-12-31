@@ -1,7 +1,7 @@
 package com.aurilux.xar.entity.monster;
 
 import com.aurilux.xar.entity.ai.EntityAIBlighterSwell;
-import com.aurilux.xar.lib.XARMisc;
+import com.aurilux.xar.init.XARMisc;
 import com.aurilux.xar.world.MutableExplosion;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -14,26 +14,34 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import thaumcraft.api.entities.ITaintedMob;
 import thaumcraft.api.potions.PotionFluxTaint;
 import thaumcraft.common.config.ConfigItems;
 
+/**
+ * Lore-wise the predecessor to the creeper, the Blighter functions in mostly the same way, though it isn't as
+ * destructive to the environment. Logically it would have been simpler to extend the EntityCreeper class, however most
+ * of its members are private and thus, inaccessible.
+ *
+ * The only purpose to implementing the 'ITaintedMob' interface is so that taint damage heals the mob instead of
+ * damaging it
+ */
 public class EntityBlighter extends EntityMob implements ITaintedMob {
-	//Time when this creeper was last in an active state
+	/** Time when this blighter was last in an active state */
     private int lastActiveTime;
-    //The amount of time since the blighter was close enough to the player to ignite
+    /** The amount of time since the blighter was close enough to the player to ignite */
     private int timeSinceIgnited;
-    //Maximum time before a blighter will explode
+    /** Maximum time before a blighter will explode */
     private int fuseTime = 30;
-    //Explosion radius for this blighter
+    /** Explosion radius for this blighter */
     private int explosionRadius = 5;
-    //The explosion object
+    /** The explosion object */
     private MutableExplosion exp;
     
     public EntityBlighter(World world) {
         super(world);
+
         //AI tasks
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(2, new EntityAIBlighterSwell(this));
@@ -46,9 +54,9 @@ public class EntityBlighter extends EntityMob implements ITaintedMob {
         
         //Explosion info
         exp = new MutableExplosion(world, this)
-        	.setPotionEffect(new PotionEffect(PotionFluxTaint.instance.id, 200))
-        	.setDamage(true, 2)
-        	.setForce(true, .25F);
+        	.addPotionEffect(new PotionEffect(PotionFluxTaint.instance.id, 200))
+        	.setDamage(2F, .6F)
+        	.setForce(.50F);
 	}
 
     protected void applyEntityAttributes() {
@@ -61,21 +69,17 @@ public class EntityBlighter extends EntityMob implements ITaintedMob {
     }
 
     /**
-     * Returns true if the newer Entity AI code should be run
+     * @return true if the newer Entity AI code should be run. You really shouldn't ever return false
      */
     @Override
     public boolean isAIEnabled() { return true; }
 
-    /**
-     * The number of iterations PathFinder.getSafePoint will execute before giving up.
-     */
+    /** The number of iterations PathFinder.getSafePoint will execute before giving up. */
     public int getMaxSafePointTries() {
         return this.getAttackTarget() == null ? 3 : 3 + (int)(this.getHealth() - 1.0F);
     }
 
-    /**
-     * Called when the mob is falling. Calculates and applies fall damage.
-     */
+    /** Called when the mob is falling. Calculates and applies fall damage. */
     protected void fall(float distance) {
         super.fall(distance);
         timeSinceIgnited = (int)((float)timeSinceIgnited + distance * 1.5F);
@@ -87,21 +91,15 @@ public class EntityBlighter extends EntityMob implements ITaintedMob {
 
     protected void entityInit() {
         super.entityInit();
-        this.dataWatcher.addObject(16, Byte.valueOf((byte) -1));
+        this.dataWatcher.addObject(16, (byte) -1);
     }
 
-    /**
-     * (abstract) Protected helper method to write subclass entity data to NBT.
-     */
     public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
         compound.setShort("Fuse", (short)this.fuseTime);
         compound.setByte("ExplosionRadius", (byte)this.explosionRadius);
     }
 
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
 
@@ -109,9 +107,7 @@ public class EntityBlighter extends EntityMob implements ITaintedMob {
         if (compound.hasKey("ExplosionRadius")) this.explosionRadius = compound.getByte("ExplosionRadius");
     }
 
-    /**
-     * Called to update the entity's position/logic.
-     */
+    /** Updates the entity's position/logic/behavior. */
     public void onUpdate() {
         if (this.isEntityAlive()) {
             lastActiveTime = timeSinceIgnited;
@@ -135,17 +131,21 @@ public class EntityBlighter extends EntityMob implements ITaintedMob {
 
         super.onUpdate();
     }
-    
+
+    /**
+     * The sound the entity makes when it gets hurt/damaged
+     * @return the string of the sound file
+     */
     protected String getHurtSound() {
         return "mob.creeper.say";
     }
-    
+
+    /**
+     * The sound the entity makes when it dies
+     * @return the string of the sound file
+     */
     protected String getDeathSound() {
         return "mob.creeper.death";
-    }
-    
-    public void onDeath(DamageSource source) {
-        super.onDeath(source);
     }
 
     public boolean attackEntityAsMob(Entity entity) { return true; }
@@ -155,25 +155,19 @@ public class EntityBlighter extends EntityMob implements ITaintedMob {
         return ConfigItems.itemEssence;
     }
 
-    /**
-     * Returns the intensity of the creeper's flash when it is ignited.
-     */
+    /** Returns the intensity of the creeper's flash when it is ignited. */
     @SideOnly(Side.CLIENT)
     public float getBlighterFlashIntensity(float partialTick) {
         return ((float)lastActiveTime + (float)(timeSinceIgnited - lastActiveTime) * partialTick) / (float)(fuseTime - 2);
     }
 
-    /**
-     * Returns the current state of creeper, -1 is idle, 1 is 'in fuse'
-     */
+    /** Returns the current state of creeper, -1 is idle, 1 is 'in fuse' */
     public int getBlighterState() {
         return this.dataWatcher.getWatchableObjectByte(16);
     }
 
-    /**
-     * Sets the state of creeper, -1 to idle and 1 to be 'in fuse'
-     */
+    /** Sets the state of creeper, -1 to idle and 1 to be 'in fuse' */
     public void setBlighterState(int state) {
-        this.dataWatcher.updateObject(16, Byte.valueOf((byte)state));
+        this.dataWatcher.updateObject(16, (byte)state);
     }
 }

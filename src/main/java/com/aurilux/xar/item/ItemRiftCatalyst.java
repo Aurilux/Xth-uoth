@@ -1,8 +1,7 @@
 package com.aurilux.xar.item;
 
 import com.aurilux.xar.entity.item.EntityRiftCatalyst;
-import com.aurilux.xar.lib.XARItems;
-import com.aurilux.xar.lib.XARUtils;
+import com.aurilux.xar.util.ResourceUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -16,13 +15,12 @@ public class ItemRiftCatalyst extends Item {
 	public ItemRiftCatalyst() {
 		super();
         this.maxStackSize = 1;
-        XARItems.setItem(this, "riftCatalyst", "Rift Catalyst");
 	}
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister reg) {
-        this.itemIcon = reg.registerIcon(XARUtils.getTexturePath("riftCatalyst"));
+        this.itemIcon = ResourceUtils.getIcon(reg, "riftCatalyst");
     }
 	
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {

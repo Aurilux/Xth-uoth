@@ -9,7 +9,6 @@ import java.util.Set;
 public class XARGuiFactory implements IModGuiFactory {
     @Override
     public void initialize(Minecraft minecraftInstance) {
-
     }
 
     @Override

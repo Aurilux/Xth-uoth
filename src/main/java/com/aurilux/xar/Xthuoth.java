@@ -1,20 +1,19 @@
 package com.aurilux.xar;
 
-import com.aurilux.xar.handler.BucketHandler;
-import com.aurilux.xar.handler.ConfigurationHandler;
-import com.aurilux.xar.handler.PlayerHandler;
-import com.aurilux.xar.handler.UpdateHandler;
-import com.aurilux.xar.lib.*;
-import com.aurilux.xar.proxy.CommonXARProxy;
+import com.aurilux.xar.handler.ConfigHandler;
+import com.aurilux.xar.init.*;
+import com.aurilux.xar.proxy.XARServerProxy;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.common.MinecraftForge;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(modid = XARModInfo.MOD_ID,
     name = XARModInfo.MOD_NAME,
@@ -26,14 +25,15 @@ public class Xthuoth {
     public static Xthuoth instance;
 
     @SidedProxy(clientSide = XARModInfo.CLIENT_PROXY, serverSide = XARModInfo.SERVER_PROXY)
-    public static CommonXARProxy proxy;
-    //public static final CreativeTabs creativeTabs = new XARCreativeTabs(XARModInfo.MOD_NAME);
+    public static XARServerProxy proxy;
+
+    public static final Logger log = LogManager.getLogger(XARModInfo.MOD_NAME);
     
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
-		//init load configuration and event handler
-        ConfigurationHandler.init(e.getSuggestedConfigurationFile());
-        FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
+        ConfigHandler.init(e.getSuggestedConfigurationFile());
+        //unlike most other event handlers, the 'ConfigHandler' must be initialized here in preInit to work properly
+        FMLCommonHandler.instance().bus().register(new ConfigHandler());
 
         //pre-initialization
         XARMisc.init();
@@ -49,14 +49,13 @@ public class Xthuoth {
 	public void init(FMLInitializationEvent e) {
         //initialization
         XARWorldgen.init();
-
-		//register event handlers
-        MinecraftForge.EVENT_BUS.register(new BucketHandler());
-        MinecraftForge.EVENT_BUS.register(new PlayerHandler());
-        FMLCommonHandler.instance().bus().register(new UpdateHandler());
 		
-		//register tile entities and other rendering
-		proxy.initRenderers();
+		//register client-specific(renderers, tile entities, client event handlers, etc) and
+        //server-specific(?) objects
+		proxy.init();
+
+        //We don't want any Thaumcraft generation to be in Xth'uoth
+        FMLInterModComms.sendMessage("Thaumcraft", "dimensionBlacklist", ConfigHandler.DIM_ID + ":0");
 	}
 
 	@EventHandler

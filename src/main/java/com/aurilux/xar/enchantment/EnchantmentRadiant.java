@@ -1,6 +1,6 @@
 package com.aurilux.xar.enchantment;
 
-import com.aurilux.xar.lib.XARMisc;
+import com.aurilux.xar.init.XARMisc;
 import net.minecraft.enchantment.EnchantmentDamage;
 import net.minecraft.entity.EnumCreatureAttribute;
 

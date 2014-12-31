@@ -1,8 +1,7 @@
 package com.aurilux.xar.world;
 
 import com.aurilux.xar.entity.EntityRift;
-import com.aurilux.xar.lib.XARWorldgen;
-import net.minecraft.command.IEntitySelector;
+import com.aurilux.xar.handler.ConfigHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.LongHashMap;
@@ -18,18 +17,20 @@ import java.util.List;
 import java.util.Random;
 
 public class TeleporterXthuoth extends Teleporter {
-	//FIXME Need to ensure this works as well
 	/** World server instance */
 	private final WorldServer server;
+	
 	/** Random number generator */
 	private final Random rand;
+	
     /** The maximum distance between rifts */
     private final int searchDistance = 64;
+    
 	/** Stores successful portal placement locations for rapid lookup. */
 	private final LongHashMap destinationCoordinateCache = new LongHashMap();
+	
 	/** A list of valid keys for the destinationCoordinateCache. These are based on the X & Z of the players initial location.*/
-	@SuppressWarnings("rawtypes")
-	private final List destinationCoordinateKeys = new ArrayList();
+	private final List<Long> destinationCoordinateKeys = new ArrayList<Long>();
 
 	public TeleporterXthuoth(WorldServer ws) {
 		super(ws);
@@ -44,7 +45,7 @@ public class TeleporterXthuoth extends Teleporter {
         World worldRef = this.server.provider.worldObj == this.server ? this.server : this.server.provider.worldObj;
 
         //is the target dimension either the Overworld or Xth'uoth?
-		if (dimID == 0 || dimID == XARWorldgen.DIM_ID) {
+		if (dimID == 0 || dimID == ConfigHandler.DIM_ID) {
             int portalPosX = 0;
             int portalPosY = 0;
             int portalPosZ = 0;
@@ -62,7 +63,7 @@ public class TeleporterXthuoth extends Teleporter {
             }
             else {
                 //...otherwise find the closest rift and spawn there
-                ArrayList riftLocations = new ArrayList();
+                ArrayList<?> riftLocations = new ArrayList<Object>();
                 AxisAlignedBB searchArea = AxisAlignedBB.getBoundingBox(entityPosX - searchDistance, 0, entityPosZ - searchDistance,
                         entityPosX + searchDistance, worldRef.getActualHeight(), entityPosZ + searchDistance);
 
@@ -73,7 +74,8 @@ public class TeleporterXthuoth extends Teleporter {
 
                 for (int i1 = i; i1 <= j; ++i1) {
                     for (int j1 = k; j1 <= l; ++j1) {
-                        worldRef.getChunkFromChunkCoords(i1, j1).getEntitiesOfTypeWithinAAAB(EntityRift.class, searchArea, riftLocations, (IEntitySelector)null);
+                        worldRef.getChunkFromChunkCoords(i1, j1).getEntitiesOfTypeWithinAAAB(EntityRift.class,
+                            searchArea, riftLocations, null);
                     }
                 }
 
@@ -86,6 +88,8 @@ public class TeleporterXthuoth extends Teleporter {
                 }
                 else { //...otherwise spawn a new rift
                     int chunkSize = 16;
+                    //This line of code is known as a label. It is an easier way to break out of multiple nested loops.
+                    portalLoop:
                     for (int xLoc = entityPosX - chunkSize; xLoc <= entityPosX + chunkSize; ++xLoc) {
                         for (int zLoc = entityPosZ - chunkSize; zLoc <= entityPosZ + chunkSize; ++zLoc) {
                             for (int yLoc = worldRef.getActualHeight() - 1; yLoc >= 0; --yLoc) {
@@ -99,6 +103,9 @@ public class TeleporterXthuoth extends Teleporter {
                                         portalPosX = xLoc;
                                         portalPosY = yLoc;
                                         portalPosZ = zLoc;
+                                        
+                                        worldRef.spawnEntityInWorld(new EntityRift(worldRef, portalPosX, portalPosY, portalPosZ));
+                                        break portalLoop; //break out of the entire label defined above
                                     }
                                 }
                             }
@@ -108,15 +115,13 @@ public class TeleporterXthuoth extends Teleporter {
             }
             destinationCoordinateCache.add(chunkCoord, new PortalPosition(portalPosX, portalPosY, portalPosZ, worldRef.getTotalWorldTime()));
             destinationCoordinateKeys.add(Long.valueOf(chunkCoord));
-
-            boolean test = worldRef.spawnEntityInWorld(new EntityRift(worldRef, portalPosX, portalPosY, portalPosZ));
             entity.setLocationAndAngles(portalPosX + .5D, portalPosY + .5D, portalPosZ + .5D, entity.rotationYaw, entity.rotationPitch);
 		}
 	}
 
     public void removeStalePortalLocations(long par1) {
         if (par1 % 100L == 0L) {
-            Iterator iterator = this.destinationCoordinateKeys.iterator();
+            Iterator<Long> iterator = this.destinationCoordinateKeys.iterator();
             long j = par1 - 600L;
 
             while (iterator.hasNext()) {

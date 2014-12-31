@@ -1,6 +1,6 @@
 package com.aurilux.xar.handler;
 
-import com.aurilux.xar.lib.XARModInfo;
+import com.aurilux.xar.XARModInfo;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
@@ -24,11 +24,15 @@ public class UpdateHandler {
 	
 	private boolean isUpdateAvailable() {
 		try {
+			//connects to the file we have specified and then reads it
 			HttpsURLConnection conn = (HttpsURLConnection) new URL(XARModInfo.VERSION_FILE).openConnection();
 			InputStream versionFile = conn.getInputStream();
 			Properties versionProperties = new Properties();
 			versionProperties.loadFromXML(versionFile);
-			String currentVersion = versionProperties.getProperty(Loader.instance().getMCVersionString());
+
+			//gets the mod version corresponding to the Minecraft version along with the thread url
+			String mcVersion = Loader.instance().getMCVersionString();
+			String currentVersion = versionProperties.getProperty(mcVersion);
 			updateThread = versionProperties.getProperty("thread");
 			return (currentVersion != null && updateThread != null && !currentVersion.equals(XARModInfo.MOD_VERSION));
 		}

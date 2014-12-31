@@ -1,7 +1,7 @@
 package com.aurilux.xar.client.renderer.entity;
 
 import com.aurilux.xar.entity.EntityRift;
-import com.aurilux.xar.lib.XARModInfo;
+import com.aurilux.xar.util.ResourceUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.Tessellator;
@@ -13,8 +13,6 @@ import org.lwjgl.opengl.GL12;
 
 @SideOnly(Side.CLIENT)
 public class RenderRift extends Render {
-	private final ResourceLocation RIFT_TEXTURE = new ResourceLocation(XARModInfo.MOD_ID + ":textures/entity/rift.png");
-	
 	public void doRender(Entity entity, double xPos, double yPos, double zPos, float width, float height) {
 		this.doRenderRift((EntityRift) entity, xPos, yPos, zPos, width, height);
 	}
@@ -25,20 +23,18 @@ public class RenderRift extends Render {
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glScalef(1.0F, 1.0F, 1.0F);
         this.bindEntityTexture(rift);
-        
+
+        //Dimensions in terms of blocks. The Rift is only one block wide and two blocks tall
         float riftHalfWidth  = .5f;
         float riftHalfHeight = 1f;
         
         //rotates the entity to always face the player across the y-axis
         //the first parameter determines the value(amount) of the rotation, while the other three are the value's effect on the axis (x, y, and z respectively)
         GL11.glRotatef(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-        //rotates the entity to always face the player on the x-axis
-        //GL11.glRotatef(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-        //There is no z-rotation because that would cause it to tilt to the left or right, like when your character falls to the side when you die
 
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
-        tessellator.setNormal(0.0F, 1.0F, 0.0F);
+        //tessellator.setNormal(0.0F, 1.0F, 0.0F);
         //top-left
         tessellator.addVertexWithUV((double)(0 - riftHalfWidth), (double)(0 - riftHalfHeight), 0.0D, (double)0, (double)0);
         //top-right
@@ -54,6 +50,6 @@ public class RenderRift extends Render {
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return RIFT_TEXTURE;
+		return ResourceUtils.RIFT_TEXTURE;
 	}
 }

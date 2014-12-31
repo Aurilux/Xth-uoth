@@ -1,8 +1,11 @@
 package com.aurilux.xar.client.model.entity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBase;
 import net.minecraftforge.client.model.obj.WavefrontObject;
 
+@SideOnly(Side.CLIENT)
 public class ModelCrystalGolem extends ModelBase {
 	private WavefrontObject model;
 	

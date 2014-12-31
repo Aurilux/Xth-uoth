@@ -1,7 +1,7 @@
 package com.aurilux.xar.entity.item;
 
 import com.aurilux.xar.entity.EntityRift;
-import com.aurilux.xar.lib.XARItems;
+import com.aurilux.xar.init.XARItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

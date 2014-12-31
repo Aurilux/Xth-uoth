@@ -1,6 +1,6 @@
 package com.aurilux.xar.world.biome;
 
-import com.aurilux.xar.world.gen.feature.WorldGenWightBulb;
+import com.aurilux.xar.world.gen.feature.WorldGenWightbulb;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -11,23 +11,24 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import static net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.CUSTOM;
 
 public class BiomeDecoratorXthuoth extends BiomeDecorator {
-	//FIXME ensure this works correctly. Decorate function no longer available from superclass?
 	//WorldGens
 	private WorldGenerator wightBulbGen;
 	
-	//Gen amount constants
+	//Gen amount constants. NOTE: These are not the minimum amounts for each block, just iterations. You will often find much less
+	//than the number provided.
 	private int wightBulbPerChunk = 50;
 	
-	public BiomeDecoratorXthuoth(BiomeGenBase biomeGenBase) {
+	public BiomeDecoratorXthuoth() {
 		super();
 		
 		//WorldGen inits
-		wightBulbGen = new WorldGenWightBulb();
+		wightBulbGen = new WorldGenWightbulb();
 	}
-	
-	protected void decorate() {
+
+	@Override
+    protected void genDecorations(BiomeGenBase biome) {
 		MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Pre(currentWorld, randomGenerator, chunk_X, chunk_Z));
-		//TODO add some way to generate rifts
+		//TODO will need to update most, if not all, randomly-generated coordinates once I make the new terrain gen
 		
         int i; //the for-loop iterator (counter); declared here for re-usability on subsequent world-gen loops
         int x; //the randomly-generated x-Coord; declared here for re-usability on subsequent world-gen loops

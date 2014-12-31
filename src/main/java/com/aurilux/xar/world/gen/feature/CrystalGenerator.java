@@ -1,6 +1,6 @@
 package com.aurilux.xar.world.gen.feature;
 
-import com.aurilux.xar.lib.XARBlocks;
+import com.aurilux.xar.init.XARBlocks;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -38,7 +38,7 @@ public class CrystalGenerator implements IWorldGenerator {
             int randPosY = random.nextInt(64);
             int randPosZ = z + random.nextInt(16);
 
-            new WorldGenMinable(XARBlocks.oreCrystal, veinSize).generate(world, random, randPosX, randPosY, randPosZ);
+            new WorldGenMinable(XARBlocks.orePrysmal, veinSize).generate(world, random, randPosX, randPosY, randPosZ);
         }
     }
     

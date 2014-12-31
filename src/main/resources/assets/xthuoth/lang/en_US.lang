@@ -1,3 +1,11 @@
+# Configuration
+blighter_entity_id.desc=The entity ID for the Blighter
+rift_entity_id.desc=The entity ID for the Rift
+catalyst_entity_id.desc=The entity ID for the Rift Catalyst
+aberrant_biome_id.desc=The biome ID for the biome exclusive to Xth'uoth
+xthuoth_dim_id.desc=The dimension ID for Xth'uoth
+radiant_enchant_id.desc=The radiant enchantment ID
+
 # Achievements
 achievement.achievement_0=OOOH Shiny!
 achievement.achievement_0.desc=And also sharp
@@ -9,22 +17,37 @@ achievement.achievement_2=Aberration Slayer
 achievement.achievement_2.desc=Just a little one
 
 # Items
-item.crystalShard.name=Crystal Shard
-item.crystalLamina.name=Crystal Lamina
+item.prysmalShard.name=Prysmal Shard
+item.prysmalLamina.name=Prysmal Lamina
 item.riftCatalyst.name=Rift Catalyst
 item.wightbulbPod.name=Wightbulb Pod
 item.bucketIchor.name=Ichor Bucket
+item.veilShears.name=Veil Shears
+item.taintedNode.name=Tainted Node
+item.prysmalHelm.name=Prysmal Helmet
+item.prysmalChest.name=Prysmal Chestplate
+item.prysmalLegs.name=Prysmal Leggings
+item.prysmalBoots.name=Prysmal Boots
+item.mixedPotion.drink=Mixed Potion
+item.mixedPotion.throw=Splash Mixed Potion
+
+item.prysmalWandCap.name=Prysmal Cap
+item.Wand.prysmal.cap=Prysmal Bossed
 
 # Blocks/Tile Entities
-tile.oreCrystal.name=Crystal Geode
-tile.blockCrystal.name=Crystal Block
+tile.orePrysmal.name=Prysmal Geode
+tile.blockPrysmal.name=Prysmal Block
 tile.blockAberrack.name=Aberrack
 tile.wightbulb.name=Wightbulb
+tile.thanabloom.name=Thanabloom
 tile.fluidIchor.name=Ichor
 
 # Entities
 entity.Rift.name=Rift
 entity.Blighter.name=Blighter
+
+# Tile Entities
+tile.immixer.name=Immixer
 
 # Potions
 potion.poisonImmunity.postfix=Potion of Poison Immunity
@@ -32,19 +55,53 @@ potion.poisonImmunity=Poison Immunity
 potion.lifesight.postfix=Potion of Lifesight
 potion.lifesight=Lifesight
 
+# Container
+container.immixer=Immixer
+
 # Misc
 enchantment.damage.aberration=Radiant
-itemGroup.tabsXAR=Xth'uoth
+itemGroup.Xthuoth=Xth'uoth
+xth.purifying=Purifying
+xth.visdiscountdetail0=flat
+xth.visdiscountdetail1=per additional set piece
+xth.visdiscountdetail2=for complete set
 
 # Research
-tc.research_category.aberrmancy=Aberrmancy
+tc.research_category.XTHUOTH=Xth'uoth
+
+xarresearch.name.xthpotions=Potions
+xarresearch.lore.xthpotions=Nifty concoctions
+xarresearch.page.xthpotions.0=You can find some pretty rare ingredients in Xth'uoth to make some new potions. You hope to discover more soon.<BR><BR>§l      §nPoison Immunity§r<BR> Whether it be from annoying swarms of cave spiders or sinister witches, being poisoned has been the death of many adventurers. Fortunately, Xth'uoth provides you with a way to limit your death count a bit. By combining a wightbulb pod with an awkward potion you can create a brew that will make you immune to all poison for its duration.
+xarresearch.page.xthpotions.1=§l         §nLifesight§r<BR>Mixing a thanabloom heart with an awkward potions creates a brew that bestows its life-detecing ability upon the imbiber. For the duration of this potion any mob you cannot see directly (such as on the other side of a wall) will be highlighted with a particle effect.
+
+xarresearch.name.mixingPotions=Combining Potions
+xarresearch.lore.mixingPotions=All the Buffs!
+xarresearch.page.mixingPotions.0=Potions have always carried an unproportionately heavy tax on a thaumaturges's inventory considering their benefit, but you believe you've found a way to ease this burden: the Immixer. The Immixer allows you to combine multiple potions into one consumable (splash potions don't seem to mix well). You can combine up to 6 individual potions at once, and up to 10 potions effects into one mixed potion depending on the emulsifier you use (which will be listed on the following page). If you have more potions in the inventory than the emulsifier can handle, it will combine as many applicable potions as it can beginning from the top-left-most potion slot and going clockwise.
+xarresearch.page.mixingPotions.1=§l         §nEmulsifiers§r<BR>Emulsifiers are substances that hold the multiple potion liquids together. Without them the potions would separate and there would be no guarantee which potion you would get when you take a drink. The current emulsifiers you know of are, along with how effective they are (up to how many potion effects they can combine): redstone dust = 2 effects, glowstone dust = 4 effects, tallow = 6 effects, salis mundus = 8 effects, tainted goo = 10 effects
+
+xarresearch.name.xthenchants=Enchantments
+xarresearch.lore.xthenchants=To fight the good fight
+xarresearch.page.xthenchants.0=The discovery of this new dimension has provided some of the missing puzzle pieces regarding the use of enchanting magic. The enchantments you've found are:<BR><BR>§l§nRadiant(weapon only)§r<BR>Only enchantable on weapons, the Radiant enchantment deals additional damage to the natives of Xth'uoth, very akin to Smite and undead.
+
+xarresearch.name.prysmal=Prysmal
+xarresearch.lore.prysmal=OOH, shiny!
+xarresearch.page.prysmal.0=After coming upon these, you can't believe you didn't see them before, and now they are glaringly obvious! Prysmal geodes appear similar to infused ores, however they are not aligned with any of the Primal Aspects. Perhaps they are the progenitors to infused prysmals? You aren't sure. For now you can turn them into thin plates and blocks that you are certain you will find uses for later.
+
+xarresearch.name.shardInfusion=Shard Infusion
+xarresearch.lore.shardInfusion=From one shiny to another
+xarresearch.page.shardInfusion.0=Your original idea about prysmal being the precursor to infused ore wasn't too far off and your research has lead to the knowledge that you can turn prysmal shards into elemental shards. Simply provide an appropriate piece of crystallized vis as a template, add a bit of Ordo and Perdito, then: vìola!
+
+xarresearch.name.prysmalWandCaps=Prysmal Wand Caps
+xarresearch.lore.prysmalWandCaps=Shiny and functional!
+xarresearch.page.prysmalWandCaps.0=The crystalline structure of prysmal has been shown to be extremely efficient when channelling magical energy. Turning it into a wand cap is a no-brainer.
+
+xarresearch.name.prysmalArmor=Crystalline Armor
+xarresearch.lore.prysmalArmor=Wear the shiny!
+xarresearch.page.prysmalArmor.0=Your initial forays into studying Prysmal has revealed that the structural lattice of this material barely impedes the flow of magical energy, as is the case with most other materials. In fact you are lead to believe it may even §lbolster§r the vis efficiency of casting spells a significant degree. Unfortunately, the material itself isn't very sturdy, so to provide it with enough integrity thaumium armor must be used as the foundation of these armor pieces<BR><BR>You also notice your mind seems more calm and serene since donning the armor. It seems to slowly expel the weaker forms of tainted energy from the individual wearing it, slowly purifying his mind in the process.
+
 xarresearch.name.rifts=Rifts
 xarresearch.lore.rifts=Link to another world?
 xarresearch.page.rifts.0=Throughout your study of aura nodes, one type in particular stands out. Tainted nodes appear to resonate at a different frequency than any of the others similar to portals to the nether. You wonder what's on the other side...<BR><BR>You think you've discovered a way to widen this link into a traversable portal, also known as a Rift. Simply throw the Rift Catalyst at a tainted node and a rift will be formed, consuming the catalyst in the process.
-
-xarresearch.name.crystals=Crystals
-xarresearch.lore.crystals=OOH, shiny!
-xarresearch.page.crystals.0=After coming upon these, you can't believe you didn't see them before, and now they are glaringly obvious! Crystal geodes appear similar to infused ores, however they are not aligned with any of the Primal Aspects. Perhaps they are the progenitors to infused crystals? You aren't sure. For now you can turn them into thin plates and blocks that you are certain you will find uses for later.
 
 xarresearch.name.aberrations=Aberrations
 xarresearch.lore.aberrations=Dark, deadly denizens

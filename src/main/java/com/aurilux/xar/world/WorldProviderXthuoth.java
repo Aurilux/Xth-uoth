@@ -1,22 +1,25 @@
 package com.aurilux.xar.world;
 
-import com.aurilux.xar.lib.XARWorldgen;
+import com.aurilux.xar.handler.ConfigHandler;
+import com.aurilux.xar.init.XARWorldgen;
 import com.aurilux.xar.render.SkyRendererXthuoth;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraftforge.client.IRenderHandler;
 
 public class WorldProviderXthuoth extends WorldProvider {
+    private IRenderHandler skyRenderer;
 	
 	@Override
     public void registerWorldChunkManager() {
         this.worldChunkMgr = new ChunkManagerXthuoth(XARWorldgen.aberrantBiome, 0.0f, 0.0f);
         this.isHellWorld = false;
         this.hasNoSky = true;
-        this.dimensionId = XARWorldgen.DIM_ID;
-        this.setSkyRenderer(new SkyRendererXthuoth());
+        this.dimensionId = ConfigHandler.DIM_ID;
+        skyRenderer = new SkyRendererXthuoth();
     }
 
     /**
@@ -37,6 +40,13 @@ public class WorldProviderXthuoth extends WorldProvider {
             this.lightBrightnessTable[i] = (1.0F - f1) / (f1 * 3.0F + 1.0F) * (1.0F - f) + f;
         }
     }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IRenderHandler getSkyRenderer() {
+        return skyRenderer;
+    }
+
     @Override
     @SideOnly(Side.CLIENT)
     public boolean getWorldHasVoidParticles() { return false; }
