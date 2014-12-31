@@ -22,7 +22,7 @@ dependencies {
 }
 
 //Current version of my mod. Gets appended to the end of the jar name
-version = "1.7.10-1.1.0"
+version = "1.7.10-1.1.1"
 //Java file structure/hierarchy
 group = "com.aurilux.xar" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 //Name of the mod. Used to name the resulting jar

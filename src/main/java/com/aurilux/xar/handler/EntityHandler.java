@@ -61,6 +61,8 @@ public class EntityHandler {
      */
     @SubscribeEvent
     public void onEntityInteract(EntityInteractEvent e) {
+        if (e.entityPlayer.getCurrentEquippedItem() == null) return;
+
         if (e.entityPlayer.getCurrentEquippedItem().getItem() instanceof ItemVeilShears && e.target instanceof EntityRift) {
             e.target.setDead();
         }
