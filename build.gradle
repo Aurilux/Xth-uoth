@@ -15,24 +15,57 @@ buildscript {
     }
 }
 
-apply plugin: 'forge'
-
-dependencies {
-    compile files("libs/Thaumcraft-1.7.10-4.2.2.1.jar")
+repositories {
+    maven { // The repo from which to get waila
+        name "Mobius Repo"
+        url "http://mobiusstrip.eu/maven"
+    }
+    maven { // the repo from which to get NEI, CodeChickenCore
+        name 'ChickenBones Repo'
+        url "http://chickenbones.net/maven/"
+    }
 }
 
+apply plugin: 'forge'
+apply plugin: 'idea'
+
+dependencies {
+    // I dont have to specify NEI.. because gradle magic. aka: transitive dependency resolution
+    compile "mcp.mobius.waila:Waila:1.5.10_1.7.10:dev"
+    compile "codechicken:CodeChickenCore:1.7.10-1.0.6.43:dev"
+    compile "codechicken:CodeChickenLib:1.7.10-1.1.3.136:dev"
+    compile project(":ArdentCore")
+    compile fileTree(dir: 'libs', include: '*.jar')
+}
+
+//Adds my custom core library mod to the list of module dependencies. Every time I refresh the idea workspace with the
+//"--refresh dependencies" parameter it adds the forge and Minecraft libraries, which doesn't include my own by default.
+idea.module.iml {
+    whenMerged { module ->
+        module.dependencies.add(new org.gradle.plugins.ide.idea.model.ModuleDependency('ArdentCore', 'COMPILE'))
+    }
+}
+
+ext.priv = parseConfig(file('private.properties'))
+
 //Current version of my mod. Gets appended to the end of the jar name
-version = "1.7.10-1.1.1"
+version = "${priv.mod_version}"
 //Java file structure/hierarchy
-group = "com.aurilux.xar" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "aurilux.xthuoth" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 //Name of the mod. Used to name the resulting jar
 archivesBaseName = "Xth'uoth"
 
 minecraft {
-    version = "1.7.10-10.13.2.1230"
+    version = "${priv.minecraft_version}-${priv.forge_version}"
 }
 
+version = "${priv.minecraft_version}-${priv.mod_version}"
+
 processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
@@ -46,3 +79,62 @@ processResources {
         exclude 'mcmod.info'
     }
 }
+
+def parseConfig(File config) {
+    config.withReader {
+        def prop = new Properties()
+        prop.load(it)
+        return (new ConfigSlurper().parse(prop))
+    }
+}
+
+def jarToCopy = copySpec{
+    from 'build/libs/'
+    include { details -> details.file.name.endsWith('.jar') &&
+            details.file.name.contains(project.version) }
+}
+
+//Copies the completed jar to three directories. The MultiMC/mods and .minecraft/mods for testing, and Dropbox for
+//release.
+task copyToTesting(type: Copy) {
+    //There is currently no way (so far as I know) to do three copies and delete's in a more concise manner
+    copy {
+        //Delete the jar of a previous mod version
+        def dir = "${priv.user}/Desktop/MultiMC/mods"
+        def files = new File(dir).listFiles().sort()
+        files.each { File file ->
+            println file.name
+            if (file.name.contains(project.name) && !file.name.contains(project.version)) {
+                delete file;
+                //returning true breaks the each loop
+                return true;
+            }
+        }
+
+        with jarToCopy
+        into dir
+    }
+    copy {
+        //Delete the jar of a previous mod version
+        def dir = "${priv.user}/AppData/Roaming/.minecraft/mods"
+        def files = new File(dir).listFiles().sort()
+        files.each { File file ->
+            println file.name
+            if (file.name.contains(project.name) && !file.name.contains(project.version)) {
+                delete file;
+                //returning true breaks the each loop
+                return true;
+            }
+        }
+
+        with jarToCopy
+        into dir
+    }
+    copy {
+        //I don't delete anything from this directory because that would get rid of previous versions
+        with jarToCopy
+        into "${priv.user}/Dropbox/Minecraft Mods/1.7.x"
+    }
+}
+//This statements tells gradle to run 'copyToTesting' immediately after the build task has been completed
+build.finalizedBy copyToTesting

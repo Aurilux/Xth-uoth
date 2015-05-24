@@ -7,18 +7,18 @@ xthuoth_dim_id.desc=The dimension ID for Xth'uoth
 radiant_enchant_id.desc=The radiant enchantment ID
 
 # Achievements
-achievement.achievement_0=OOOH Shiny!
-achievement.achievement_0.desc=And also sharp
+achievement.xthuoth.findPrysmal=OOOH Shiny!
+achievement.xthuoth.findPrysmal.desc=And also sharp
 
-achievement.achievement_1=Into the Unknown
-achievement.achievement_1.desc=Better be prepared
+achievement.xthuoth.riftTravel=Into the Unknown
+achievement.xthuoth.riftTravel.desc=Better be prepared
 
-achievement.achievement_2=Aberration Slayer
-achievement.achievement_2.desc=Just a little one
+achievement.xthuoth.aberrationSlayer=Aberration Slayer
+achievement.xthuoth.aberrationSlayer.desc=Just a little one (probably)
 
 # Items
-item.prysmalShard.name=Prysmal Shard
-item.prysmalLamina.name=Prysmal Lamina
+item.itemResource.0.name=Prysmal Shard
+item.itemResource.1.name=Prysmal Lamina
 item.riftCatalyst.name=Rift Catalyst
 item.wightbulbPod.name=Wightbulb Pod
 item.bucketIchor.name=Ichor Bucket
@@ -32,7 +32,7 @@ item.mixedPotion.drink=Mixed Potion
 item.mixedPotion.throw=Splash Mixed Potion
 
 item.prysmalWandCap.name=Prysmal Cap
-item.Wand.prysmal.cap=Prysmal Bossed
+item.Wand.prysmal.cap=Prysmal Encrusted
 
 # Blocks/Tile Entities
 tile.orePrysmal.name=Prysmal Geode

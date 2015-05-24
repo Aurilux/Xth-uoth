@@ -1,15 +1,21 @@
-[{
+{
+  "modListVersion": 2,
+  "modList": [{
 	"modid": "Xthuoth",
 	"name": "Xth'uoth: the Aberrant Realm",
-	"description": "Explore the Aberrant Realm of Xth'uoth, where fear and insanity rule!",
+	"description": "Explore some of the hidden mysteries behind the origins of taint, warp, and flux by delving into a terrifying dimension inspired by the Lovecraftian mythos and the Far Realms of D&D. Prepare yourself with new armor, weapons, enchantments, research and more!",
 	"version": "${mod_version}",
 	"mcversion": "${minecraft_version}",
-	"url": "goo.gl/J1USql",
+	"url": "",
 	"updateUrl": "",
 	"authorList": [ "Aurilux" ],
-	"credits": "Azanor, Glowstone Ghost",
-	"logoFile": "",
-	"screenshots": [],
-	"parent": "",
-	"dependencies": []
-}]
+	"credits": "Azanor; Art by Glowstone Ghost",
+    "logoFile": "",
+    "screenshots": [],
+    "parent": "",
+    "requiredMods": [ "Forge", "ArdentCore", "Thaumcraft" ],
+    "dependencies": [ "ArdentCore", "Thaumcraft" ],
+    "dependants": [],
+    "useDependencyInformation": true
+  }]
+}

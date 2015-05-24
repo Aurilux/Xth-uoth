@@ -4,11 +4,23 @@
 *.bat
 *.classpath
 *.project
+*.iml
+*.ipr
+*.iws
+*.properties
+*.zip
+*.txt
 Media/
 bin/
-libs/
 .git/
 resources/backup/
+config/
+crash-reports/
+logs/
+mods/
+resourcepacks/
+saves/
+libs/
 
 # OS generated files #
 ######################
