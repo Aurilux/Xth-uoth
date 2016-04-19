@@ -1,0 +1,78 @@
+Version 1.2.0-1.7.10
+~Added custom spawn egg
+~Ichor eel
+~Oculite
+~Immixer custom model
+	~Added automation
+~Centrifuge
+	~Separates mixed potions
+	~custom model
+	~automation with ISidedInventory?
+~Lifesight potion and Thanabloom flower
+	~Add thanabloom world gen
+	~Thanabloom 'opens up' as a player gets closer
+~Prysmal Tools and weapons?
+~Mycibor plant
+~Better terrain gen
+~Crystal ore/geodes no longer exist. They have been replaced with Prysmal spires which spawn in generated caves
+    ~Prysmal Golem
+
+
+Version 1.1.0-1.7.10
+The bedrock-surfaced Aberrant biome should no longer spawn in the Overworld
+Added Immixer and combined potions
+	The Immixer allows you to combine up to six potions (at once) into one potion with all effects
+	With the right potions and emulsifier, you can create a potion with up to 10 effects
+Crops harvested on land hydrated by ichor will have a small chance to increase their drops
+Rifts now spread taint just like tainted nodes though at a significantly faster rate
+There is now a random chance that an aberration will stumble through a Rift to the Overworld
+Being in Xth'uoth slowly adds sticky warp to a player
+    The chance to add sticky warp increases depending on the total warp you already have. Madness begets madness.
+Added aspects to blocks, items, and entities
+Should now work correctly on servers
+Blighters now correctly destroy weak blocks such as snow and leaves
+Added two creative only items: one that spawns a tainted node, and another that spawns and destroys rifts
+	To spawn either a tainted node or a rift, simply right click on a block
+	To destroy a rift, right-click it with the veil shears
+More research has been added, some just information on pre-existing additions.
+Crystal has been renamed Prysmal
+You can infuse Prysmal shards at an arcane table with crystallized vis to make the primal elemental shards
+Added Prysmal equipment
+    Armor provides vis discount. The amount per armor changes depending on how many armor pieces the player has equipped
+    Prysmal armor possesses an ability that is the opposite of Warping: Purifying. It will slowly remove sticky warp while worn
+    Prysmal wand caps
+
+Version 1.0.2-1.7.10
+Dimension ID config option
+
+Version 1.0.1-1.7.10
+Removed artifacts from using Ant builds
+Added config options for biome ID's and entity ID's plus a few others
+Added Ichor bucket
+You can now correctly harvest and plant Wightbulb
+Crystal ore now generates in the world (had it disabled by accident)
+
+Version 1.0.0-1.7.10
+Updated the code for 1.7.10
+Changed ichor fluids to extend BlockFluidClassic
+Refactored a LOT of code to be generally more efficient and prepared to work with Thaumcraft
+Changed this mod to be a Thaumcraft 4 addon
+Added a Thaumonomicon research tab for Xth'uoth in addition to a few early researches
+Rift Catalyst is now an arcane table recipe
+Portals are now created by throwing a Rift Catalyst at a tainted node
+Added aspects to mob entities (currently only the Blighter)
+Improved configuration and added mod configuration gui
+
+Version 0.1.6-1.6.4
+Added Achievements. 3 individual plus the achievement page
+Added Potions. 1 completely working (poison immunity), 1 work in progress (lifesight)
+Added Wight Bulb Pods. Dropped by breaking Wight Bulbs and used to make the poison immunity potion
+
+Version 0.1.2-1.6.4
+Blighters now have their own custom explosion which only destroys weak blocks like leaves, snow, etc.
+Updated Crystal Block texture
+Mod update detection has been implemented
+Added the Radiant Enchantment which acts like Smite against the natives of Xth'uoth (currently just Blighters)
+
+Version 0.1.0-1.6.4
+Initial alpha release
